@@ -6,22 +6,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.ArrayList
 import javax.persistence.*
 
-@Table(name = "users")
-class User {
+open class User {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        var userid: Long = 0
+        open var userid: Long = 0
 
         @Column(nullable = false, unique = true)
-        var username: String = ""
+        open var username: String = ""
 
         @Column(nullable = false)
         private var password: String = ""
 
         @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
         @JsonIgnoreProperties("user")
-        var userRoles: MutableList<UserRoles> = mutableListOf()
+        open var userRoles: MutableList<UserRoles> = mutableListOf()
 
         constructor()
 
