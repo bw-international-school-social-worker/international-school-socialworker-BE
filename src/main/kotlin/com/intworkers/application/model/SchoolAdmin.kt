@@ -7,22 +7,22 @@ import javax.persistence.Table
 @Entity
 @Table(name = "schooladmins")
 class SchoolAdmin(
-        override var username: String,
-        pass: String,
-        override var userRoles: MutableList<UserRoles>,
+        uname: String = "",
+        pass: String = "",
+        ur: MutableList<UserRoles> = mutableListOf(),
 
         @Column(nullable = false)
-        var firstname: String,
+        var firstname: String = "",
 
         @Column(nullable = false)
-        var lastname: String,
+        var lastname: String = "",
 
         @Column(nullable = false)
-        var email: String,
+        var email: String = "",
 
         @Column(nullable = false)
-        var phone: String
+        var phone: String = ""
 
-        ) : User(username, pass, userRoles) {
+        ) : User(uname, pass, ur) {
 
 }

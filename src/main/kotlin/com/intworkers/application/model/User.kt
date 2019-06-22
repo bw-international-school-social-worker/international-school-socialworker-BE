@@ -45,6 +45,10 @@ open class User {
                         return rtnList
                 }
 
+        fun getPassword(): String? {
+                return password
+        }
+
         fun setPassword(password: String) {
                 val passwordEncoder = BCryptPasswordEncoder()
                 this.password = passwordEncoder.encode(password)
