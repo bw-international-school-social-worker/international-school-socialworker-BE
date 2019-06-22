@@ -41,8 +41,8 @@ class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
     }
 
     companion object {
-        internal val CLIENT_ID = "lambda-client"
-        internal val CLIENT_SECRET = "lambda-secret"
+        internal val CLIENT_ID = "int-workers"
+        internal val CLIENT_SECRET = "lambdaintworkers"
         internal val GRANT_TYPE_PASSWORD = "password"
         internal val AUTHORIZATION_CODE = "authorization_code"
         internal val REFRESH_TOKEN = "refresh_token"

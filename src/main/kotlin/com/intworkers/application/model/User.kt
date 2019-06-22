@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.ArrayList
 import javax.persistence.*
 
+@Entity
 open class User {
 
         @Id

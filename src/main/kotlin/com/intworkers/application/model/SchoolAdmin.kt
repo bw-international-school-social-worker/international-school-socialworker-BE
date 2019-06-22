@@ -1,13 +1,13 @@
 package com.intworkers.application.model
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "schooladmins")
 class SchoolAdmin(
-        uname: String = "",
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        override var username: String = "",
         pass: String = "",
         ur: MutableList<UserRoles> = mutableListOf(),
 
@@ -23,6 +23,4 @@ class SchoolAdmin(
         @Column(nullable = false)
         var phone: String = ""
 
-        ) : User(uname, pass, ur) {
-
-}
+        ) : User(username, pass, ur)

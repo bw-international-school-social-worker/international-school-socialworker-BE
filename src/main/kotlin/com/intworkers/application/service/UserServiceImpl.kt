@@ -58,6 +58,10 @@ class UserServiceImpl : UserDetailsService, UserService {
         val newSchoolAdmin = SchoolAdmin()
         newSchoolAdmin.username = schoolAdmin.username
         newSchoolAdmin.setPasswordNoEncrypt(schoolAdmin.getPassword()!!)
+        newSchoolAdmin.firstname = schoolAdmin.firstname
+        newSchoolAdmin.lastname = schoolAdmin.lastname
+        newSchoolAdmin.email = schoolAdmin.email
+        newSchoolAdmin.phone = schoolAdmin.phone
 
         val newRoles = ArrayList<UserRoles>()
         for (ur in schoolAdmin.userRoles) {

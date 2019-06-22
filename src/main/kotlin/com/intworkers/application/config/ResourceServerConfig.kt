@@ -31,9 +31,6 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
                 "/createnewuser"
         )
                 .permitAll()
-                .antMatchers("/users/**", "/oauth/revoke-token").authenticated()
-                .antMatchers("/roles/**").hasAnyRole("ADMIN", "USER", "DATA")
-                .antMatchers("/actuator/**").hasAnyRole("ADMIN")
                 .and()
                 .exceptionHandling().accessDeniedHandler(OAuth2AccessDeniedHandler())
 
