@@ -1,7 +1,6 @@
-package com.intworkers.application.model
+package com.intworkers.application.model.auth
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import java.util.ArrayList
 import javax.persistence.*
 
 
@@ -11,7 +10,7 @@ class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var roleid: Long = 0
+    var roleId: Long = 0
 
     @Column(nullable = false, unique = true)
     var name: String? = ""

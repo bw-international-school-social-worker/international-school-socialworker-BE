@@ -1,4 +1,4 @@
-package com.intworkers.application.model
+package com.intworkers.application.model.auth
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.io.Serializable
@@ -11,14 +11,14 @@ class UserRoles : Serializable {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "userid")
+    @JoinColumn(name = "user_id")
     @JsonIgnoreProperties("userRoles")
     var user: User? = null
 
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "roleid")
+    @JoinColumn(name = "role_id")
     @JsonIgnoreProperties("userRoles")
     var role: Role? = null
 

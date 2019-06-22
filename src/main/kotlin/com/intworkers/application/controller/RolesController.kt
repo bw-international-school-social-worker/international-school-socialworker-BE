@@ -1,6 +1,6 @@
 package com.intworkers.application.controller
 
-import com.intworkers.application.model.Role
+import com.intworkers.application.model.auth.Role
 import com.intworkers.application.service.RoleService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
@@ -46,8 +46,8 @@ class RolesController {
         val responseHeaders = HttpHeaders()
         val newRoleURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{roleid}")
-                .buildAndExpand(newRole.roleid)
+                .path("/{roleId}")
+                .buildAndExpand(newRole.roleId)
                 .toUri()
         responseHeaders.location = newRoleURI
 

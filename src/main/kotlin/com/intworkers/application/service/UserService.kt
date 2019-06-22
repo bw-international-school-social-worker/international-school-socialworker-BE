@@ -1,6 +1,6 @@
 package com.intworkers.application.service
 
-import com.intworkers.application.model.User
+import com.intworkers.application.model.auth.User
 
 interface UserService {
 
