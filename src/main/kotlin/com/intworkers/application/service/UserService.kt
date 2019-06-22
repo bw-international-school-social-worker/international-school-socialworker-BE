@@ -1,17 +1,16 @@
 package com.intworkers.application.service
 
-import com.intworkers.application.model.SchoolAdmin
 import com.intworkers.application.model.User
 
 interface UserService {
 
-    fun findAllAdmins(): List<SchoolAdmin>
+    fun findAll(): List<User>
 
-    fun findAdminById(id: Long): SchoolAdmin
+    fun findUserById(id: Long): User
 
-    fun deleteAdmin(id: Long)
+    fun delete(id: Long)
 
-    fun saveAdmin(schoolAdmin: SchoolAdmin): SchoolAdmin
+    fun save(user: User): User
 
-    fun updateAdmin(schoolAdmin: SchoolAdmin, id: Long): SchoolAdmin
+    fun update(user: User, id: Long): User
 }

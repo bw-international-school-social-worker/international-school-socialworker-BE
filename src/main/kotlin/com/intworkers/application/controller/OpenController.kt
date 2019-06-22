@@ -1,6 +1,5 @@
 package com.intworkers.application.controller
 
-import com.intworkers.application.model.SchoolAdmin
 import com.intworkers.application.model.User
 import com.intworkers.application.model.UserRoles
 import com.intworkers.application.service.RoleService
@@ -33,18 +32,26 @@ class OpenController {
 
     @PostMapping(value = ["/createnewuser"], consumes = ["application/json"], produces = ["application/json"])
     @Throws(URISyntaxException::class)
-    fun addNewAdmin(request: HttpServletRequest, @Valid
+    fun addNewUser(request: HttpServletRequest, @Valid
     @RequestBody
-    newAdmin: SchoolAdmin): ResponseEntity<*> {
+    newuser: User): ResponseEntity<*> {
         logger.trace(request.requestURI + " accessed")
 
         val newRoles = ArrayList<UserRoles>()
-        newRoles.add(UserRoles(newAdmin, roleService.findByName("schooladmin")))
-        newAdmin.userRoles = newRoles
+        newRoles.add(UserRoles(newuser, roleService.findByName("user")))
+        newuser.userRoles = newRoles
 
-        userService.saveAdmin(newAdmin)
+        val newuser = userService.save(newuser)
 
-        return ResponseEntity<Any>(HttpStatus.CREATED)
+        // set the location header for the newly created resource - to another controller!
+        val responseHeaders = HttpHeaders()
+        val newRestaurantURI = ServletUriComponentsBuilder
+                .fromUriString(request.serverName + ":" + request.localPort + "/users/user/{userId}")
+                .buildAndExpand(newuser.userid).toUri()
+        responseHeaders.location = newRestaurantURI
+
+
+        return ResponseEntity<Any>(null, responseHeaders, HttpStatus.CREATED)
     }
 
     companion object {
