@@ -8,7 +8,7 @@ import javax.persistence.Table
 @Table(name = "schooladmins")
 class SchoolAdmin(
         override var username: String,
-        var pass: String,
+        pass: String,
         override var userRoles: MutableList<UserRoles>,
 
         @Column(nullable = false)
