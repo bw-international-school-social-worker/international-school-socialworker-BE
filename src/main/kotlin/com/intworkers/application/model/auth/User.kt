@@ -3,6 +3,7 @@ package com.intworkers.application.model.auth
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.intworkers.application.model.School
+import com.intworkers.application.model.Visit
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.ArrayList
@@ -53,6 +54,11 @@ class User {
                 inverseJoinColumns = [JoinColumn(name = "schoolid")])
         @JsonIgnoreProperties("schools")
         var schools: MutableList<School> = mutableListOf()
+
+        @OneToMany(mappedBy = "worker", cascade = [CascadeType.ALL],
+                orphanRemoval = false)
+        @JsonIgnoreProperties("worker")
+        var visits: MutableList<Visit> = mutableListOf()
 
         constructor()
 

@@ -18,7 +18,12 @@ class School(
 
         @ManyToMany(mappedBy = "schools")
         @JsonIgnoreProperties("schools")
-        var workers: MutableList<User> = mutableListOf()
+        var workers: MutableList<User> = mutableListOf(),
+
+        @OneToMany(mappedBy = "school", cascade = [CascadeType.ALL],
+                orphanRemoval = false)
+        @JsonIgnoreProperties("school")
+        var visits: MutableList<Visit> = mutableListOf()
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
