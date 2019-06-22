@@ -1,6 +1,6 @@
 package com.intworkers.application.controller
 
-import com.intworkers.application.model.User
+import com.intworkers.application.model.auth.User
 import com.intworkers.application.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders

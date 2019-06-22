@@ -1,7 +1,7 @@
 package com.intworkers.application.controller
 
-import com.intworkers.application.model.User
-import com.intworkers.application.model.UserRoles
+import com.intworkers.application.model.auth.User
+import com.intworkers.application.model.auth.UserRoles
 import com.intworkers.application.service.RoleService
 import com.intworkers.application.service.UserService
 import org.slf4j.LoggerFactory

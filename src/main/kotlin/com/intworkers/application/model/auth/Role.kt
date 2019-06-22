@@ -1,7 +1,6 @@
-package com.intworkers.application.model
+package com.intworkers.application.model.auth
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import java.util.ArrayList
 import javax.persistence.*
 
 

@@ -1,27 +1,51 @@
-package com.intworkers.application.model
+package com.intworkers.application.model.auth
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.intworkers.application.model.School
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.ArrayList
 import javax.persistence.*
 
 @Entity
-open class User {
+@Table(name = "users")
+class User {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        open var userid: Long = 0
+        var userid: Long = 0
 
         @Column(nullable = false, unique = true)
-        open var username: String = ""
+        var username: String = ""
 
         @Column(nullable = false)
+        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private var password: String = ""
 
         @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
         @JsonIgnoreProperties("user")
-        open var userRoles: MutableList<UserRoles> = mutableListOf()
+        var userRoles: MutableList<UserRoles> = mutableListOf()
+
+        @Column(nullable = true)
+        var firstname: String? = null
+
+        @Column(nullable = true)
+        var lastname: String? = null
+
+        @Column(nullable = true)
+        var phone: String? = null
+
+        @Column(nullable = true)
+        var email: String? = null
+
+        @Column(nullable = true)
+        var photourl: String? = null
+
+        @OneToOne(mappedBy = "schooladmin", cascade = [CascadeType.ALL],
+                orphanRemoval = false)
+        @JsonIgnoreProperties("schooladmin")
+        var school: School? = null
 
         constructor()
 

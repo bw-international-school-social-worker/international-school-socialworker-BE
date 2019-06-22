@@ -1,7 +1,7 @@
 package com.intworkers.application.service
 
-import com.intworkers.application.model.User
-import com.intworkers.application.model.UserRoles
+import com.intworkers.application.model.auth.User
+import com.intworkers.application.model.auth.UserRoles
 import com.intworkers.application.repository.RoleRepository
 import com.intworkers.application.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,6 +1,6 @@
 package com.intworkers.application.repository
 
-import com.intworkers.application.model.Role
+import com.intworkers.application.model.auth.Role
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
