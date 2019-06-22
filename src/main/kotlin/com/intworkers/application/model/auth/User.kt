@@ -47,6 +47,13 @@ class User {
         @JsonIgnoreProperties("schooladmin")
         var school: School? = null
 
+        @ManyToMany
+        @JoinTable(name = "workerSchools",
+                joinColumns = [JoinColumn(name = "workerid")],
+                inverseJoinColumns = [JoinColumn(name = "schoolid")])
+        @JsonIgnoreProperties("schools")
+        var schools: MutableList<School> = mutableListOf()
+
         constructor()
 
         constructor(name: String, password: String, userRoles: MutableList<UserRoles>) {

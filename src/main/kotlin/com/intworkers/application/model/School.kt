@@ -1,15 +1,12 @@
 package com.intworkers.application.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.intworkers.application.model.auth.User
 import javax.persistence.*
 
 @Entity
 @Table(name = "schools")
 class School(
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        var schoolid: Long = 0,
-
         @Column(nullable = false)
         var schoolname: String? = null,
 
@@ -17,5 +14,13 @@ class School(
         var dateestablished : String? = null,
 
         @OneToOne
-        var schooladmin: User? = null
-)
+        var schooladmin: User? = null,
+
+        @ManyToMany(mappedBy = "schools")
+        @JsonIgnoreProperties("schools")
+        var workers: MutableList<User> = mutableListOf()
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    var schoolid: Long = 0
+}

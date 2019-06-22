@@ -1,5 +1,6 @@
 package com.intworkers.application
 
+import com.intworkers.application.model.School
 import com.intworkers.application.model.auth.Role
 import com.intworkers.application.model.auth.User
 import com.intworkers.application.model.auth.UserRoles
@@ -29,5 +30,6 @@ class UserSeedData : CommandLineRunner {
         admins.add(UserRoles(User(), r1))
         val admin = User("admin", "password", admins)
         userService.save(admin)
+
     }
 }
