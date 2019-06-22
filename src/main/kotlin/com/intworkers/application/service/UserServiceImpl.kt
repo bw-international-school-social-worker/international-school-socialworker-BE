@@ -74,7 +74,7 @@ class UserServiceImpl : UserDetailsService, UserService {
         val currentUser = userrepos.findByUsername(authentication.name)
 
         if (currentUser != null) {
-            if (id == currentUser.userid) {
+            if (id == currentUser.userId) {
                 if (user.username != null) {
                     currentUser.username = user.username
                 }
@@ -87,11 +87,11 @@ class UserServiceImpl : UserDetailsService, UserService {
                     // with so many relationships happening, I decided to go
                     // with old school queries
                     // delete the old ones
-                    rolerepos.deleteUserRolesByUserId(currentUser.userid)
+                    rolerepos.deleteUserRolesByUserId(currentUser.userId)
 
                     // add the new ones
                     for (ur in user.userRoles) {
-                        rolerepos.insertUserRoles(id, ur.role!!.roleid)
+                        rolerepos.insertUserRoles(id, ur.role!!.roleId)
                     }
                 }
                 return userrepos.save(currentUser)

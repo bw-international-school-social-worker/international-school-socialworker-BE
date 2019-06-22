@@ -56,8 +56,8 @@ class UserController {
         val responseHeaders = HttpHeaders()
         val newUserURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{userid}")
-                .buildAndExpand(newuser.userid)
+                .path("/{userId}")
+                .buildAndExpand(newuser.userId)
                 .toUri()
         responseHeaders.location = newUserURI
 

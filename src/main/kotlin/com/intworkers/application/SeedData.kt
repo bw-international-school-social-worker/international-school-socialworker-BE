@@ -1,6 +1,5 @@
 package com.intworkers.application
 
-import com.intworkers.application.model.School
 import com.intworkers.application.model.auth.Role
 import com.intworkers.application.model.auth.User
 import com.intworkers.application.model.auth.UserRoles

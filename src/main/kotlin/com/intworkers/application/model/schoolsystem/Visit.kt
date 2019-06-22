@@ -1,4 +1,4 @@
-package com.intworkers.application.model
+package com.intworkers.application.model.schoolsystem
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.intworkers.application.model.auth.User
@@ -9,24 +9,24 @@ import javax.persistence.*
 class Visit (
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        var visitid: Long = 0,
+        var visitId: Long = 0,
 
         @ManyToOne
-        @JoinColumn(name = "workerid")
+        @JoinColumn(name = "workerId")
         @JsonIgnoreProperties("visits")
         var worker: User? = null,
 
         @ManyToOne
-        @JoinColumn(name = "schoolid")
+        @JoinColumn(name = "schoolId")
         @JsonIgnoreProperties("visits")
         var school: School? = null,
 
         @Column
-        var visitdate: String? = null,
+        var visitDate: String? = null,
 
         @Column
-        var visitreason: String? = null,
+        var visitReason: String? = null,
 
         @Column
-        var visitdescription: String? = null
+        var visitDescription: String? = null
 )

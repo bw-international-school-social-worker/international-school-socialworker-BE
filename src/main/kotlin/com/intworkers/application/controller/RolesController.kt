@@ -46,8 +46,8 @@ class RolesController {
         val responseHeaders = HttpHeaders()
         val newRoleURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{roleid}")
-                .buildAndExpand(newRole.roleid)
+                .path("/{roleId}")
+                .buildAndExpand(newRole.roleId)
                 .toUri()
         responseHeaders.location = newRoleURI
 

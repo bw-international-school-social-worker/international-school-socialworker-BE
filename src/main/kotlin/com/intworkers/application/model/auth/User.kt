@@ -2,8 +2,9 @@ package com.intworkers.application.model.auth
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.intworkers.application.model.School
-import com.intworkers.application.model.Visit
+import com.intworkers.application.model.schoolsystem.School
+import com.intworkers.application.model.schoolsystem.Student
+import com.intworkers.application.model.schoolsystem.Visit
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.ArrayList
@@ -15,7 +16,7 @@ class User {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        var userid: Long = 0
+        var userId: Long = 0
 
         @Column(nullable = false, unique = true)
         var username: String = ""
@@ -29,10 +30,10 @@ class User {
         var userRoles: MutableList<UserRoles> = mutableListOf()
 
         @Column(nullable = true)
-        var firstname: String? = null
+        var firstName: String? = null
 
         @Column(nullable = true)
-        var lastname: String? = null
+        var lastName: String? = null
 
         @Column(nullable = true)
         var phone: String? = null
@@ -41,17 +42,17 @@ class User {
         var email: String? = null
 
         @Column(nullable = true)
-        var photourl: String? = null
+        var photoUrl: String? = null
 
-        @OneToOne(mappedBy = "schooladmin", cascade = [CascadeType.ALL],
+        @OneToOne(mappedBy = "schoolAdmin", cascade = [CascadeType.ALL],
                 orphanRemoval = false)
-        @JsonIgnoreProperties("schooladmin")
+        @JsonIgnoreProperties("schoolAdmin")
         var school: School? = null
 
         @ManyToMany
         @JoinTable(name = "workerSchools",
-                joinColumns = [JoinColumn(name = "workerid")],
-                inverseJoinColumns = [JoinColumn(name = "schoolid")])
+                joinColumns = [JoinColumn(name = "workerId")],
+                inverseJoinColumns = [JoinColumn(name = "schoolId")])
         @JsonIgnoreProperties("schools")
         var schools: MutableList<School> = mutableListOf()
 
@@ -59,6 +60,11 @@ class User {
                 orphanRemoval = false)
         @JsonIgnoreProperties("worker")
         var visits: MutableList<Visit> = mutableListOf()
+
+        @OneToMany(mappedBy = "worker", cascade = [CascadeType.ALL],
+                orphanRemoval = false)
+        @JsonIgnoreProperties("worker")
+        var students: MutableList<Student> = mutableListOf()
 
         constructor()
 

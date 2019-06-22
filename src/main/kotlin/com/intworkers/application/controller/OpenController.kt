@@ -47,7 +47,7 @@ class OpenController {
         val responseHeaders = HttpHeaders()
         val newRestaurantURI = ServletUriComponentsBuilder
                 .fromUriString(request.serverName + ":" + request.localPort + "/users/user/{userId}")
-                .buildAndExpand(newuser.userid).toUri()
+                .buildAndExpand(newuser.userId).toUri()
         responseHeaders.location = newRestaurantURI
 
 
