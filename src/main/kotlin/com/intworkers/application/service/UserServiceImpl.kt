@@ -1,7 +1,6 @@
 package com.intworkers.application.service
 
 import com.intworkers.application.model.SchoolAdmin
-import com.intworkers.application.model.User
 import com.intworkers.application.model.UserRoles
 import com.intworkers.application.repository.RoleRepository
 import com.intworkers.application.repository.SchoolAdminRepository
@@ -19,7 +18,7 @@ import java.util.ArrayList
 
 @Component
 @Service(value = "userService")
-class SchoolAdminServiceImpl : UserDetailsService, SchoolAdminService {
+class UserServiceImpl : UserDetailsService, UserService {
 
     @Autowired
     lateinit var schoolAdminRepo: SchoolAdminRepository
@@ -35,18 +34,18 @@ class SchoolAdminServiceImpl : UserDetailsService, SchoolAdminService {
     }
 
     @Throws(EntityNotFoundException::class)
-    override fun findUserById(id: Long): SchoolAdmin {
+    override fun findAdminById(id: Long): SchoolAdmin {
         return schoolAdminRepo.findById(id)
                 .orElseThrow { EntityNotFoundException(java.lang.Long.toString(id)) }
     }
 
-    override fun findAll(): List<SchoolAdmin> {
+    override fun findAllAdmins(): List<SchoolAdmin> {
         val list = mutableListOf<SchoolAdmin>()
         schoolAdminRepo.findAll().iterator().forEachRemaining{ list.add(it) }
         return list
     }
 
-    override fun delete(id: Long) {
+    override fun deleteAdmin(id: Long) {
         if (schoolAdminRepo.findById(id).isPresent) {
             schoolAdminRepo.deleteById(id)
         } else {
@@ -55,7 +54,7 @@ class SchoolAdminServiceImpl : UserDetailsService, SchoolAdminService {
     }
 
     @Transactional
-    override fun save(schoolAdmin: SchoolAdmin): SchoolAdmin {
+    override fun saveAdmin(schoolAdmin: SchoolAdmin): SchoolAdmin {
         val newSchoolAdmin = SchoolAdmin()
         newSchoolAdmin.username = schoolAdmin.username
         newSchoolAdmin.setPasswordNoEncrypt(schoolAdmin.getPassword()!!)
@@ -71,7 +70,7 @@ class SchoolAdminServiceImpl : UserDetailsService, SchoolAdminService {
 
 
     @Transactional
-    override fun update(schoolAdmin: SchoolAdmin, id: Long): SchoolAdmin {
+    override fun updateAdmin(schoolAdmin: SchoolAdmin, id: Long): SchoolAdmin {
         val authentication = SecurityContextHolder.getContext().authentication
         val currentUser = schoolAdminRepo.findByUsername(authentication.name)
 

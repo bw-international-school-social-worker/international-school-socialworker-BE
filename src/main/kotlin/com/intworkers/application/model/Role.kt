@@ -18,7 +18,7 @@ class Role {
 
     @OneToMany(mappedBy = "role", cascade = [CascadeType.ALL])
     @JsonIgnoreProperties("role")
-    var userRoles: List<UserRoles> = ArrayList()
+    var userRoles: MutableList<UserRoles> = mutableListOf()
 
     constructor() {}
 
