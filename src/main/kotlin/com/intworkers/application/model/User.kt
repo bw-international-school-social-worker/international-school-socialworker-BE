@@ -1,40 +1,31 @@
 package com.intworkers.application.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.ArrayList
 import javax.persistence.*
 
 @Table(name = "users")
-class User(
+class User {
+
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        val userid: Long = 0,
+        var userid: Long = 0
 
         @Column(nullable = false, unique = true)
-        val username: String = "",
+        var username: String = ""
 
         @Column(nullable = false)
-        val password: String = "") {
+        private var password: String = ""
 
         @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
         @JsonIgnoreProperties("user")
-        var userRoles: List<UserRoles> = ArrayList()
+        var userRoles: MutableList<UserRoles> = mutableListOf()
 
-        val authority: List<SimpleGrantedAuthority>
-                get() {
-                        val rtnList = ArrayList<SimpleGrantedAuthority>()
+        constructor()
 
-                        for (r in this.userRoles) {
-                                val myRole = "ROLE_" + r.role!!.name!!.toUpperCase()
-                                rtnList.add(SimpleGrantedAuthority(myRole))
-                        }
-
-                        return rtnList
-                }
-
-        constructor() {}
-
-        constructor(name: String, password: String, userRoles: List<UserRoles>) {
+        constructor(name: String, password: String, userRoles: MutableList<UserRoles>) {
                 username = name
                 setPassword(password)
                 for (ur in userRoles) {
@@ -43,9 +34,17 @@ class User(
                 this.userRoles = userRoles
         }
 
-        fun getPassword(): String? {
-                return password
-        }
+        val authority: List<SimpleGrantedAuthority>
+                get() {
+                        val rtnList = ArrayList<SimpleGrantedAuthority>()
+
+                        for (r in this.userRoles) {
+                                val myRole = "ROLE_" + r.role?.name?.toUpperCase()
+                                rtnList.add(SimpleGrantedAuthority(myRole))
+                        }
+
+                        return rtnList
+                }
 
         fun setPassword(password: String) {
                 val passwordEncoder = BCryptPasswordEncoder()
