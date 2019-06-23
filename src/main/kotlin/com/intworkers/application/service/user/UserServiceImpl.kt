@@ -30,7 +30,7 @@ class UserServiceImpl : UserDetailsService, UserService {
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userrepos.findByUsername(username)
-        return org.springframework.security.core.userdetails.User(user.username!!, user.getPassword()!!, user.authority)
+        return org.springframework.security.core.userdetails.User(user.username, user.getPassword()!!, user.authority)
     }
 
     @Throws(EntityNotFoundException::class)

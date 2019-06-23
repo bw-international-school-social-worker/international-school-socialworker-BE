@@ -8,7 +8,10 @@ import javax.persistence.*
 @Table(name = "students")
 class Student(
         @Column
-        var studentName: String? = null,
+        var firstName: String? = null,
+
+        @Column
+        var lastName: String? = null,
 
         @Column
         var photoUrl: String? = null,
