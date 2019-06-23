@@ -33,7 +33,7 @@ class School(
 
         @OneToMany(mappedBy = "school", cascade = [CascadeType.ALL],
                 orphanRemoval = true)
-        var classes: MutableList<Class> = mutableListOf(),
+        var classes: MutableList<Course> = mutableListOf(),
 
         @OneToMany(mappedBy = "school", cascade = [CascadeType.ALL],
                 orphanRemoval = false)

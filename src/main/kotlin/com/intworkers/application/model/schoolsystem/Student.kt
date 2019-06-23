@@ -48,7 +48,7 @@ class Student(
         @ManyToOne
         @JoinColumn(name = "classId")
         @JsonIgnoreProperties("students")
-        var studentClass: Class? = null,
+        var studentClass: Course? = null,
 
         @ManyToOne
         @JoinColumn(name = "schoolId")

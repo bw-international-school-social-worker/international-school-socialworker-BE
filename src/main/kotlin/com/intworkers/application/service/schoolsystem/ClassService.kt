@@ -1,15 +1,15 @@
 package com.intworkers.application.service.schoolsystem
 
-import com.intworkers.application.model.schoolsystem.Class
+import com.intworkers.application.model.schoolsystem.Course
 
 interface ClassService {
-    fun findById(id: Long): Class
+    fun findById(id: Long): Course
 
-    fun findAll(): MutableList<Class>
+    fun findAll(): MutableList<Course>
 
-    fun save(classToSave: Class): Class
+    fun save(classToSave: Course): Course
 
-    fun update(classToUpdate: Class): Class
+    fun update(classToUpdate: Course, id: Long): Course
 
     fun delete(id: Long)
 

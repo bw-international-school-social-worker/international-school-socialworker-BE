@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "classes")
-class Class(
+class Course(
         @Column
         var className: String? = null,
 

@@ -4,8 +4,10 @@ import com.intworkers.application.exception.ResourceNotFoundException
 import com.intworkers.application.model.schoolsystem.Student
 import com.intworkers.application.repository.schoolsystem.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Service(value = "studentService")
@@ -37,6 +39,8 @@ class StudentServiceImpl: StudentService {
         return students
     }
 
+    @Transactional
+    @Modifying
     override fun save(student: Student): Student {
         val newStudent = Student()
         newStudent.firstName = student.firstName
@@ -53,6 +57,8 @@ class StudentServiceImpl: StudentService {
         return studentRepository.save(newStudent)
     }
 
+    @Transactional
+    @Modifying
     override fun update(student: Student, id: Long): Student {
        val updateStudent = studentRepository.findById(id)
                .orElseThrow { ResourceNotFoundException("Student with id $id not found") }
@@ -70,6 +76,7 @@ class StudentServiceImpl: StudentService {
         return studentRepository.save(updateStudent)
     }
 
+    @Transactional
     override fun assignToWorker(studentId: Long, workerId: Long) {
         if (studentRepository.findById(studentId).isPresent
                 && socialWorkerRepository.findById(workerId).isPresent) {
@@ -77,6 +84,7 @@ class StudentServiceImpl: StudentService {
         } else throw ResourceNotFoundException("Couldn't find student or social worker")
     }
 
+    @Transactional
     override fun assignToClass(studentId: Long, classId: Long) {
         if (studentRepository.findById(studentId).isPresent
                 && classRepository.findById(classId).isPresent) {
@@ -84,6 +92,7 @@ class StudentServiceImpl: StudentService {
         } else throw ResourceNotFoundException("Couldn't find student or class")
     }
 
+    @Transactional
     override fun assignToGrade(studentId: Long, gradeId: Long) {
         if (studentRepository.findById(studentId).isPresent
                 && gradeRepository.findById(gradeId).isPresent) {
@@ -91,6 +100,7 @@ class StudentServiceImpl: StudentService {
         } else throw ResourceNotFoundException("Couldn't find student or grade")
     }
 
+    @Transactional
     override fun assignToSchool(studentId: Long, schoolId: Long) {
         if (studentRepository.findById(studentId).isPresent
                 && schoolRepository.findById(schoolId).isPresent) {
@@ -98,6 +108,8 @@ class StudentServiceImpl: StudentService {
         } else throw ResourceNotFoundException("Couldn't find student or school")
     }
 
+    @Transactional
+    @Modifying
     override fun delete(studentId: Long) {
         if (studentRepository.findById(studentId).isPresent)
             studentRepository.deleteById(studentId)
