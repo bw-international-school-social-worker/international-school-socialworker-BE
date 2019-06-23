@@ -74,28 +74,28 @@ class StudentServiceImpl: StudentService {
         if (studentRepository.findById(studentId).isPresent
                 && socialWorkerRepository.findById(workerId).isPresent) {
             studentRepository.assignToWorker(studentId, workerId)
-        }
+        } else throw ResourceNotFoundException("Couldn't find student or social worker")
     }
 
     override fun assignToClass(studentId: Long, classId: Long) {
         if (studentRepository.findById(studentId).isPresent
                 && classRepository.findById(classId).isPresent) {
             studentRepository.assignToClass(studentId, classId)
-        }
+        } else throw ResourceNotFoundException("Couldn't find student or class")
     }
 
     override fun assignToGrade(studentId: Long, gradeId: Long) {
         if (studentRepository.findById(studentId).isPresent
                 && gradeRepository.findById(gradeId).isPresent) {
             studentRepository.assignToGrade(studentId, gradeId)
-        }
+        } else throw ResourceNotFoundException("Couldn't find student or grade")
     }
 
     override fun assignToSchool(studentId: Long, schoolId: Long) {
         if (studentRepository.findById(studentId).isPresent
                 && schoolRepository.findById(schoolId).isPresent) {
             studentRepository.assignToSchool(studentId, schoolId)
-        }
+        } else throw ResourceNotFoundException("Couldn't find student or school")
     }
 
     override fun delete(studentId: Long) {
