@@ -20,6 +20,6 @@ class Class(
         var students: MutableList<Student> = mutableListOf()
 ) {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var classId: Long = 0
 }

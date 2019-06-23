@@ -2,7 +2,7 @@ package com.intworkers.application.service.schoolsystem
 
 import com.intworkers.application.exception.ResourceNotFoundException
 import com.intworkers.application.model.schoolsystem.Student
-import com.intworkers.application.repository.schoolsystem.StudentRepository
+import com.intworkers.application.repository.schoolsystem.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
@@ -13,6 +13,18 @@ class StudentServiceImpl: StudentService {
 
     @Autowired
     private lateinit var studentRepository: StudentRepository
+
+    @Autowired
+    private lateinit var socialWorkerRepository: ServiceWorkerRepository
+
+    @Autowired
+    private lateinit var schoolRepository: SchoolRepository
+
+    @Autowired
+    private lateinit var gradeRepository: GradeRepository
+
+    @Autowired
+    private lateinit var classRepository: ClassRepository
 
     override fun findById(id: Long): Student {
         return studentRepository.findById(id)
@@ -59,22 +71,36 @@ class StudentServiceImpl: StudentService {
     }
 
     override fun assignToWorker(studentId: Long, workerId: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (studentRepository.findById(studentId).isPresent
+                && socialWorkerRepository.findById(workerId).isPresent) {
+            studentRepository.assignToWorker(studentId, workerId)
+        }
     }
 
     override fun assignToClass(studentId: Long, classId: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (studentRepository.findById(studentId).isPresent
+                && classRepository.findById(classId).isPresent) {
+            studentRepository.assignToClass(studentId, classId)
+        }
     }
 
     override fun assignToGrade(studentId: Long, gradeId: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (studentRepository.findById(studentId).isPresent
+                && gradeRepository.findById(gradeId).isPresent) {
+            studentRepository.assignToGrade(studentId, gradeId)
+        }
     }
 
     override fun assignToSchool(studentId: Long, schoolId: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (studentRepository.findById(studentId).isPresent
+                && schoolRepository.findById(schoolId).isPresent) {
+            studentRepository.assignToSchool(studentId, schoolId)
+        }
     }
 
     override fun delete(studentId: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (studentRepository.findById(studentId).isPresent)
+            studentRepository.deleteById(studentId)
+        else throw ResourceNotFoundException("Student with id $studentId not found")
     }
 }

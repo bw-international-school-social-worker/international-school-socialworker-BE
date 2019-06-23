@@ -9,7 +9,7 @@ import javax.persistence.*
 class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var roleId: Long = 0
 
     @Column(nullable = false, unique = true)

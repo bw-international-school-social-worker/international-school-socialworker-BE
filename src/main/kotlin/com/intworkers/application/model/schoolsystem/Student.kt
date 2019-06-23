@@ -61,6 +61,6 @@ class Student(
         var worker: User? = null
 ) {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var studentId: Long = 0
 }

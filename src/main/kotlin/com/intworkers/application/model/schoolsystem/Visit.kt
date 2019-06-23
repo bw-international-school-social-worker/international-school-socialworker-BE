@@ -7,10 +7,6 @@ import javax.persistence.*
 @Entity
 @Table(name = "visits")
 class Visit (
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        var visitId: Long = 0,
-
         @ManyToOne
         @JoinColumn(name = "workerId")
         @JsonIgnoreProperties("visits")
@@ -29,4 +25,8 @@ class Visit (
 
         @Column
         var visitDescription: String? = null
-)
+) {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        var visitId: Long = 0
+}

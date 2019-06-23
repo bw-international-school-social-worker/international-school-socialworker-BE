@@ -19,6 +19,6 @@ class Grade(
         var students: MutableList<Student> = mutableListOf()
 ) {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var gradeId: Long = 0
 }
