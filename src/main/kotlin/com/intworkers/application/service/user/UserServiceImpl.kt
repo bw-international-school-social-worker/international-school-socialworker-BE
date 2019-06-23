@@ -1,9 +1,9 @@
-package com.intworkers.application.service
+package com.intworkers.application.service.user
 
-import com.intworkers.application.model.auth.User
-import com.intworkers.application.model.auth.UserRoles
-import com.intworkers.application.repository.RoleRepository
-import com.intworkers.application.repository.UserRepository
+import com.intworkers.application.model.user.User
+import com.intworkers.application.model.user.UserRoles
+import com.intworkers.application.repository.user.RoleRepository
+import com.intworkers.application.repository.user.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
@@ -57,13 +57,16 @@ class UserServiceImpl : UserDetailsService, UserService {
         val newUser = User()
         newUser.username = user.username
         newUser.setPasswordNoEncrypt(user.getPassword()!!)
-
         val newRoles = ArrayList<UserRoles>()
         for (ur in user.userRoles) {
             newRoles.add(UserRoles(newUser, ur.role!!))
         }
         newUser.userRoles = newRoles
-
+        newUser.firstName = user.firstName
+        newUser.lastName = user.lastName
+        newUser.phone = user.phone
+        newUser.email = user.email
+        newUser.photoUrl = user.photoUrl
         return userrepos.save(newUser)
     }
 
@@ -94,6 +97,11 @@ class UserServiceImpl : UserDetailsService, UserService {
                         rolerepos.insertUserRoles(id, ur.role!!.roleId)
                     }
                 }
+                if (user.firstName != null) currentUser.firstName = user.firstName
+                if (user.lastName != null) currentUser.lastName = user.lastName
+                if (user.email != null) currentUser.email = user.email
+                if (user.phone != null) currentUser.phone = user.phone
+                if (user.photoUrl != null) currentUser.photoUrl = user.photoUrl
                 return userrepos.save(currentUser)
             } else {
                 throw EntityNotFoundException(java.lang.Long.toString(id) + " Not current user")

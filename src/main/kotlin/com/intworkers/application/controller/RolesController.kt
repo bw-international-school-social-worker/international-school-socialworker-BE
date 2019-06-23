@@ -1,7 +1,7 @@
 package com.intworkers.application.controller
 
-import com.intworkers.application.model.auth.Role
-import com.intworkers.application.service.RoleService
+import com.intworkers.application.model.user.Role
+import com.intworkers.application.service.user.RoleService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus

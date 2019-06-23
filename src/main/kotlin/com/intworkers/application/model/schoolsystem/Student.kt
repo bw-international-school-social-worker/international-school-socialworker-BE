@@ -1,7 +1,7 @@
 package com.intworkers.application.model.schoolsystem
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.intworkers.application.model.auth.User
+import com.intworkers.application.model.user.User
 import javax.persistence.*
 
 @Entity

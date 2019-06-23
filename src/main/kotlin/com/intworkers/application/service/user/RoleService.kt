@@ -1,6 +1,6 @@
-package com.intworkers.application.service
+package com.intworkers.application.service.user
 
-import com.intworkers.application.model.auth.Role
+import com.intworkers.application.model.user.Role
 
 interface RoleService {
     fun findAll(): List<Role>
