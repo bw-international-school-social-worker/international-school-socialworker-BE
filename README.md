@@ -57,10 +57,10 @@ The request grants an "access_token" in the JSON response and must be sent in as
 ### School Admin Information Endpoints
 
 #### Get  information of currently logged in School Admin
-`GET: /schooladmins/myinfo`
+```GET: /schooladmins/myinfo```
 
 #### Update information of currently logged in School Admin
-`PUT: /schooladmins/myinfo`
+```PUT: /schooladmins/myinfo````
 ```
 All fields are optional
 Body: 
@@ -73,23 +73,23 @@ Body:
 }
 ```
 #### Delete currently logged in user
-`DELETE: /schooladmins/myinfo`
+```DELETE: /schooladmins/myinfo```
 
 #### Find School Admin by Id
 *Will only be accessible to an administrative account. Not accessible by School Admins or Social Workers.*
-`GET: /schooladmins/{id}`
+```GET: /schooladmins/{id}```
 
 #### Find all School Admins
 *Will only be accessible to an administrative account. Not accessible by School Admins or Social Workers.*
-`GET: /schooladmins/all`
+```GET: /schooladmins/all```
 
 ### Social Worker Information Endpoints
 
 #### Get  information of currently logged in Social Worker
-`GET: /socialworkers/myinfo`
+```GET: /socialworkers/myinfo```
 
 #### Update information of currently logged in Social Worker
-`PUT: /socialworkers/myinfo`
+```PUT: /socialworkers/myinfo```
 ```
 All fields are optional
 Body: 
@@ -102,12 +102,50 @@ Body:
 }
 ```
 #### Delete currently logged in user
-`DELETE: /socialworkers/myinfo`
+```DELETE: /socialworkers/myinfo```
 
 #### Find Social Worker by Id
 *Will only be accessible to School Admins.*
-`GET: /socialworkers/{id}`
+```GET: /socialworkers/{id}```
 
 #### Find all Social Workers
 *Will only be accessible to School Admins.*
-`GET: /socialworkers/all`
+```GET: /socialworkers/all```
+
+### School Endpoints
+
+#### Find School by School Id
+*Can only be accessible to Social Workers*
+```GET: /schools/school/{id}```
+
+#### Find all School
+*Can only be accessible to Social Workers*
+```GET: /schools/all```
+
+#### Create a School 
+*Can only be accessible to School Admins and a school admin can only own one school*
+```POST: /schools/myschool```
+```
+All fields are optional
+Body: 
+{
+    "schoolName": "string",
+    "dateEstablished": "string"
+}
+```
+#### Update a School
+*Can only be accessed by School Admins and the school admin can only update his/her own school*
+```PUT: /schools/myschool```
+```
+All fields are optional
+Body: 
+{
+    "schoolName": "string",
+    "dateEstablished": "string"
+}
+```/
+
+#### Delete a School
+*Can only be accessed by School Admins and the school admin can only delete his/her own school*
+```DELETE: /schools/myschool```
+
