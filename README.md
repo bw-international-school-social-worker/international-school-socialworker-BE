@@ -124,7 +124,7 @@ Body:
 
 #### Create a School 
 *Can only be accessible to School Admins and a school admin can only own one school*
-```POST: schools/myschool```
+```POST: /schools/myschool```
 ```
 All fields are optional
 Body: 
@@ -135,7 +135,7 @@ Body:
 ```
 #### Update a School
 *Can only be accessed by School Admins and the school admin can only update his/her own school*
-```PUT: schools/myschool```
+```PUT: /schools/myschool```
 ```
 All fields are optional
 Body: 
@@ -143,9 +143,9 @@ Body:
     "schoolName": "string",
     "dateEstablished": "string"
 }
-```
+```/
 
 #### Delete a School
 *Can only be accessed by School Admins and the school admin can only delete his/her own school*
-```DELETE: schools/myschool```
+```DELETE: /schools/myschool```
 
