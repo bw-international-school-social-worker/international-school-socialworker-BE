@@ -5,6 +5,7 @@ import com.intworkers.application.model.user.SocialWorker
 import org.springframework.data.domain.Pageable
 
 interface SchoolAdminService {
+
     fun findById(id: Long): SchoolAdmin
 
     fun findAll(pageable: Pageable): MutableList<SchoolAdmin>

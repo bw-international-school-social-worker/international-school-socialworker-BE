@@ -36,7 +36,7 @@ class SchoolAdmin(
                 orphanRemoval = false)
         @JsonIgnoreProperties("schoolAdmin")
         var school: School? = null
-): Serializable {
+): Serializable /* {
         override fun equals(o: Any?): Boolean {
                 if (this === o) {
                         return true
@@ -51,4 +51,4 @@ class SchoolAdmin(
         override fun hashCode(): Int {
                 return Objects.hash(user)
         }
-}
+} */

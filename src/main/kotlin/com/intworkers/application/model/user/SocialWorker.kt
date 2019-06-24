@@ -50,7 +50,7 @@ class SocialWorker(
                 orphanRemoval = false)
         @JsonIgnoreProperties("worker")
         var students: MutableList<Student> = mutableListOf()
-): Serializable {
+): Serializable /* {
         override fun equals(o: Any?): Boolean {
                 if (this === o) {
                         return true
@@ -65,4 +65,4 @@ class SocialWorker(
         override fun hashCode(): Int {
                 return Objects.hash(user)
         }
-}
+} */

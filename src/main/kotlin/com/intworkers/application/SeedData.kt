@@ -38,6 +38,7 @@ class UserSeedData : CommandLineRunner {
         val r2 = Role("socialworker")
         roleService.save(r2)
 
+
         /* val admins = mutableListOf<UserRoles>()
         admins.add(UserRoles(User(), r1))
         var admin = User("admin", "password", admins)
