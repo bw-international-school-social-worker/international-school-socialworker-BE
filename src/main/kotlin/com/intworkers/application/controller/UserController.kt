@@ -23,28 +23,28 @@ class UserController {
 
     @Autowired
     private lateinit var userService: UserService
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/users"], produces = ["application/json"])
     fun listAllUsers(request: HttpServletRequest): ResponseEntity<*> {
         val myUsers = userService.findAll()
         return ResponseEntity(myUsers, HttpStatus.OK)
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/user/{userId}"], produces = ["application/json"])
     fun getUser(request: HttpServletRequest, @PathVariable userId: Long?): ResponseEntity<*> {
         val u = userService.findUserById(userId!!)
         return ResponseEntity(u, HttpStatus.OK)
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/getusername"], produces = ["application/json"])
     @ResponseBody
     fun getCurrentUserName(request: HttpServletRequest, authentication: Authentication): ResponseEntity<*> {
         return ResponseEntity(authentication.principal, HttpStatus.OK)
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping(value = ["/user"], consumes = ["application/json"], produces = ["application/json"])
     @Throws(URISyntaxException::class)
     fun addNewUser(request: HttpServletRequest, @Valid @RequestBody newuser: User): ResponseEntity<*> {
@@ -61,7 +61,7 @@ class UserController {
         return ResponseEntity<Any>(null, responseHeaders, HttpStatus.CREATED)
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping(value = ["/user/{id}"])
     fun updateUser(request: HttpServletRequest, @RequestBody updateUser: User, @PathVariable id: Long): ResponseEntity<*> {
         userService.update(updateUser, id)

@@ -34,8 +34,8 @@ class SchoolAdmin(
         @Column(nullable = true)
         var photoUrl: String? = null,
 
-        @OneToOne(mappedBy = "schoolAdmin", cascade = [CascadeType.ALL],
-                orphanRemoval = false)
+        @OneToOne(mappedBy = "schoolAdmin",
+                orphanRemoval = true)
         @JsonIgnoreProperties("schoolAdmin")
         var school: School? = null
 ): Serializable /* {

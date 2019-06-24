@@ -43,7 +43,7 @@ class OpenController {
 
     @PostMapping(value = ["/createnewuser/{role}"], consumes = ["application/json"], produces = ["application/json"])
     @Throws(URISyntaxException::class)
-    fun addNewSchoolAdmin(request: HttpServletRequest, @Valid
+    fun addNewUser(request: HttpServletRequest, @Valid
     @RequestBody
     newUser: User, @PathVariable role: String): ResponseEntity<Any> {
         if (role != "socialworker" && role != "schooladmin") throw Exception()
