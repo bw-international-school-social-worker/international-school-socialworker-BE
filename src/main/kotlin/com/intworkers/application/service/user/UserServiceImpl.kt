@@ -1,9 +1,9 @@
-package com.intworkers.application.service
+package com.intworkers.application.service.user
 
-import com.intworkers.application.model.auth.User
-import com.intworkers.application.model.auth.UserRoles
-import com.intworkers.application.repository.RoleRepository
-import com.intworkers.application.repository.UserRepository
+import com.intworkers.application.model.user.User
+import com.intworkers.application.model.user.UserRoles
+import com.intworkers.application.repository.user.RoleRepository
+import com.intworkers.application.repository.user.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
@@ -30,7 +30,7 @@ class UserServiceImpl : UserDetailsService, UserService {
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userrepos.findByUsername(username)
-        return org.springframework.security.core.userdetails.User(user.username!!, user.getPassword()!!, user.authority)
+        return org.springframework.security.core.userdetails.User(user.username, user.getPassword()!!, user.authority)
     }
 
     @Throws(EntityNotFoundException::class)
@@ -57,13 +57,11 @@ class UserServiceImpl : UserDetailsService, UserService {
         val newUser = User()
         newUser.username = user.username
         newUser.setPasswordNoEncrypt(user.getPassword()!!)
-
         val newRoles = ArrayList<UserRoles>()
         for (ur in user.userRoles) {
             newRoles.add(UserRoles(newUser, ur.role!!))
         }
         newUser.userRoles = newRoles
-
         return userrepos.save(newUser)
     }
 
@@ -102,5 +100,9 @@ class UserServiceImpl : UserDetailsService, UserService {
             throw EntityNotFoundException(authentication.name)
         }
 
+    }
+
+    override fun findByUsername(username: String): User {
+        return userrepos.findByUsername(username)
     }
 }

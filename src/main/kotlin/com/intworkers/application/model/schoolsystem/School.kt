@@ -1,7 +1,9 @@
 package com.intworkers.application.model.schoolsystem
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.intworkers.application.model.auth.User
+import com.intworkers.application.model.user.SchoolAdmin
+import com.intworkers.application.model.user.SocialWorker
+import com.intworkers.application.model.user.User
 import javax.persistence.*
 
 @Entity
@@ -14,12 +16,12 @@ class School(
         var dateEstablished : String? = null,
 
         @OneToOne
-        @JoinColumn(name = "adminId")
-        var schoolAdmin: User? = null,
+        @JoinColumn(name = "adminId", referencedColumnName = "adminId")
+        var schoolAdmin: SchoolAdmin? = null,
 
         @ManyToMany(mappedBy = "schools")
         @JsonIgnoreProperties("schools")
-        var workers: MutableList<User> = mutableListOf(),
+        var workers: MutableList<SocialWorker> = mutableListOf(),
 
         @OneToMany(mappedBy = "school", cascade = [CascadeType.ALL],
                 orphanRemoval = false)
@@ -33,7 +35,8 @@ class School(
 
         @OneToMany(mappedBy = "school", cascade = [CascadeType.ALL],
                 orphanRemoval = true)
-        var classes: MutableList<Class> = mutableListOf(),
+        @JsonIgnoreProperties("school")
+        var classes: MutableList<Course> = mutableListOf(),
 
         @OneToMany(mappedBy = "school", cascade = [CascadeType.ALL],
                 orphanRemoval = false)
@@ -41,6 +44,6 @@ class School(
         var students: MutableList<Student> = mutableListOf()
 ) {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var schoolId: Long = 0
 }

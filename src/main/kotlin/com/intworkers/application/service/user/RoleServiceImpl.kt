@@ -1,7 +1,7 @@
-package com.intworkers.application.service
+package com.intworkers.application.service.user
 
-import com.intworkers.application.model.auth.Role
-import com.intworkers.application.repository.RoleRepository
+import com.intworkers.application.model.user.Role
+import com.intworkers.application.repository.user.RoleRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service

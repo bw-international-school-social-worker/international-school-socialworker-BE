@@ -11,6 +11,7 @@ class Grade(
 
         @ManyToOne
         @JoinColumn(name = "schoolId")
+        @JsonIgnoreProperties("grades")
         var school: School? = null,
 
         @OneToMany(mappedBy = "grade", cascade = [CascadeType.ALL],
@@ -19,6 +20,6 @@ class Grade(
         var students: MutableList<Student> = mutableListOf()
 ) {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var gradeId: Long = 0
 }

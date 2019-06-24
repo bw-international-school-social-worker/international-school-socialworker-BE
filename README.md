@@ -1,2 +1,17 @@
 # international-school-socialworker-BE
-International school social workers back end.
+
+
+'''https://buildtipsease.herokuapp.com'''
+
+##ENDPOINTS
+
+POST:/createnewuser/schooladmin
+
+Create a new user with user-type schooladmin
+
+Body: 
+
+'''{ 
+    "username": "Username string here"
+    "password": "Password string here"
+    }'''

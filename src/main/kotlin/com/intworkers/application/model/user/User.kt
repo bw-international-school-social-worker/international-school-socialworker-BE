@@ -1,4 +1,4 @@
-package com.intworkers.application.model.auth
+package com.intworkers.application.model.user
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -15,7 +15,7 @@ import javax.persistence.*
 class User {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         var userId: Long = 0
 
         @Column(nullable = false, unique = true)
@@ -29,42 +29,15 @@ class User {
         @JsonIgnoreProperties("user")
         var userRoles: MutableList<UserRoles> = mutableListOf()
 
-        @Column(nullable = true)
-        var firstName: String? = null
+        @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL],
+                orphanRemoval = true)
+        @JsonIgnoreProperties("user")
+        var worker: SocialWorker? = null
 
-        @Column(nullable = true)
-        var lastName: String? = null
-
-        @Column(nullable = true)
-        var phone: String? = null
-
-        @Column(nullable = true)
-        var email: String? = null
-
-        @Column(nullable = true)
-        var photoUrl: String? = null
-
-        @OneToOne(mappedBy = "schoolAdmin", cascade = [CascadeType.ALL],
-                orphanRemoval = false)
-        @JsonIgnoreProperties("schoolAdmin")
-        var school: School? = null
-
-        @ManyToMany
-        @JoinTable(name = "workerSchools",
-                joinColumns = [JoinColumn(name = "workerId")],
-                inverseJoinColumns = [JoinColumn(name = "schoolId")])
-        @JsonIgnoreProperties("schools")
-        var schools: MutableList<School> = mutableListOf()
-
-        @OneToMany(mappedBy = "worker", cascade = [CascadeType.ALL],
-                orphanRemoval = false)
-        @JsonIgnoreProperties("worker")
-        var visits: MutableList<Visit> = mutableListOf()
-
-        @OneToMany(mappedBy = "worker", cascade = [CascadeType.ALL],
-                orphanRemoval = false)
-        @JsonIgnoreProperties("worker")
-        var students: MutableList<Student> = mutableListOf()
+        @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL],
+                orphanRemoval = true)
+        @JsonIgnoreProperties("user")
+        var admin: SchoolAdmin? = null
 
         constructor()
 

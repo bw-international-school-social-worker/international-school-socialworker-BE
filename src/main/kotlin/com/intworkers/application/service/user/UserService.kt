@@ -1,6 +1,6 @@
-package com.intworkers.application.service
+package com.intworkers.application.service.user
 
-import com.intworkers.application.model.auth.User
+import com.intworkers.application.model.user.User
 
 interface UserService {
 
@@ -13,4 +13,6 @@ interface UserService {
     fun save(user: User): User
 
     fun update(user: User, id: Long): User
+
+    fun findByUsername(username: String): User
 }

@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "classes")
-class Class(
+class Course(
         @Column
         var className: String? = null,
 
@@ -20,6 +20,6 @@ class Class(
         var students: MutableList<Student> = mutableListOf()
 ) {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var classId: Long = 0
 }

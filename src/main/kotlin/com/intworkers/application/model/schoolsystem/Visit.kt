@@ -1,23 +1,20 @@
 package com.intworkers.application.model.schoolsystem
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.intworkers.application.model.auth.User
+import com.intworkers.application.model.user.SocialWorker
+import com.intworkers.application.model.user.User
 import javax.persistence.*
 
 @Entity
 @Table(name = "visits")
 class Visit (
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        var visitId: Long = 0,
-
         @ManyToOne
-        @JoinColumn(name = "workerId")
+        @JoinColumn(name = "workerId", referencedColumnName = "workerId")
         @JsonIgnoreProperties("visits")
-        var worker: User? = null,
+        var worker: SocialWorker? = null,
 
         @ManyToOne
-        @JoinColumn(name = "schoolId")
+        @JoinColumn(name = "schoolId", referencedColumnName = "schoolId")
         @JsonIgnoreProperties("visits")
         var school: School? = null,
 
@@ -29,4 +26,8 @@ class Visit (
 
         @Column
         var visitDescription: String? = null
-)
+) {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        var visitId: Long = 0
+}

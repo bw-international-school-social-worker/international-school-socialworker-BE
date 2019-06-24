@@ -1,4 +1,4 @@
-package com.intworkers.application.model.auth
+package com.intworkers.application.model.user
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.io.Serializable
