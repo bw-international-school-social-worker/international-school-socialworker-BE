@@ -62,11 +62,6 @@ class UserServiceImpl : UserDetailsService, UserService {
             newRoles.add(UserRoles(newUser, ur.role!!))
         }
         newUser.userRoles = newRoles
-        newUser.firstName = user.firstName
-        newUser.lastName = user.lastName
-        newUser.phone = user.phone
-        newUser.email = user.email
-        newUser.photoUrl = user.photoUrl
         return userrepos.save(newUser)
     }
 
@@ -97,11 +92,6 @@ class UserServiceImpl : UserDetailsService, UserService {
                         rolerepos.insertUserRoles(id, ur.role!!.roleId)
                     }
                 }
-                if (user.firstName != null) currentUser.firstName = user.firstName
-                if (user.lastName != null) currentUser.lastName = user.lastName
-                if (user.email != null) currentUser.email = user.email
-                if (user.phone != null) currentUser.phone = user.phone
-                if (user.photoUrl != null) currentUser.photoUrl = user.photoUrl
                 return userrepos.save(currentUser)
             } else {
                 throw EntityNotFoundException(java.lang.Long.toString(id) + " Not current user")

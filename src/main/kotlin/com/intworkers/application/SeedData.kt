@@ -3,6 +3,7 @@ package com.intworkers.application
 import com.intworkers.application.model.schoolsystem.Course
 import com.intworkers.application.model.schoolsystem.Student
 import com.intworkers.application.model.user.Role
+import com.intworkers.application.model.user.SocialWorker
 import com.intworkers.application.model.user.User
 import com.intworkers.application.model.user.UserRoles
 import com.intworkers.application.service.schoolsystem.ClassService
@@ -37,10 +38,13 @@ class UserSeedData : CommandLineRunner {
         val r2 = Role("socialworker")
         roleService.save(r2)
 
-        val admins = mutableListOf<UserRoles>()
+        /* val admins = mutableListOf<UserRoles>()
         admins.add(UserRoles(User(), r1))
         var admin = User("admin", "password", admins)
         admin = userService.save(admin)
+        val socialWorker = SocialWorker()
+        socialWorker.user = admin
+
 
         val workers = mutableListOf<UserRoles>()
         workers.add(UserRoles(User(), r2))
@@ -56,7 +60,7 @@ class UserSeedData : CommandLineRunner {
         var class1 = Course()
         class1.className = "Algebra"
         class1.students.add(student)
-        classService.save(class1)
+        classService.save(class1)*/
 
     }
 }

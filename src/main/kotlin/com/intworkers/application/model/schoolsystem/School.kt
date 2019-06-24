@@ -1,6 +1,8 @@
 package com.intworkers.application.model.schoolsystem
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.user.SchoolAdmin
+import com.intworkers.application.model.user.SocialWorker
 import com.intworkers.application.model.user.User
 import javax.persistence.*
 
@@ -14,12 +16,12 @@ class School(
         var dateEstablished : String? = null,
 
         @OneToOne
-        @JoinColumn(name = "adminId")
-        var schoolAdmin: User? = null,
+        @JoinColumn(name = "adminId", referencedColumnName = "adminId")
+        var schoolAdmin: SchoolAdmin? = null,
 
         @ManyToMany(mappedBy = "schools")
         @JsonIgnoreProperties("schools")
-        var workers: MutableList<User> = mutableListOf(),
+        var workers: MutableList<SocialWorker> = mutableListOf(),
 
         @OneToMany(mappedBy = "school", cascade = [CascadeType.ALL],
                 orphanRemoval = false)

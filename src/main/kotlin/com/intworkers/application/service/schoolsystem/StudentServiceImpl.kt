@@ -18,7 +18,7 @@ class StudentServiceImpl: StudentService {
     private lateinit var studentRepository: StudentRepository
 
     @Autowired
-    private lateinit var socialWorkerRepository: ServiceWorkerRepository
+    private lateinit var socialWorkerRepository: SocialWorkerRepository
 
     @Autowired
     private lateinit var schoolRepository: SchoolRepository

@@ -1,6 +1,7 @@
 package com.intworkers.application.model.schoolsystem
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.user.SocialWorker
 import com.intworkers.application.model.user.User
 import javax.persistence.*
 
@@ -8,12 +9,12 @@ import javax.persistence.*
 @Table(name = "visits")
 class Visit (
         @ManyToOne
-        @JoinColumn(name = "workerId")
+        @JoinColumn(name = "workerId", referencedColumnName = "workerId")
         @JsonIgnoreProperties("visits")
-        var worker: User? = null,
+        var worker: SocialWorker? = null,
 
         @ManyToOne
-        @JoinColumn(name = "schoolId")
+        @JoinColumn(name = "schoolId", referencedColumnName = "schoolId")
         @JsonIgnoreProperties("visits")
         var school: School? = null,
 
