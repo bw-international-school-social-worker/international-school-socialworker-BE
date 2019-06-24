@@ -5,6 +5,7 @@ import com.intworkers.application.model.schoolsystem.Student
 import com.intworkers.application.model.user.Role
 import com.intworkers.application.model.user.User
 import com.intworkers.application.model.user.UserRoles
+import com.intworkers.application.service.schoolsystem.ClassService
 import com.intworkers.application.service.schoolsystem.StudentService
 import com.intworkers.application.service.user.RoleService
 import com.intworkers.application.service.user.UserService
@@ -22,6 +23,9 @@ class UserSeedData : CommandLineRunner {
 
     @Autowired
     private lateinit var userService: UserService
+
+    @Autowired
+    private lateinit var classService: ClassService
 
     @Autowired
     private lateinit var studentService: StudentService
@@ -51,7 +55,8 @@ class UserSeedData : CommandLineRunner {
 
         var class1 = Course()
         class1.className = "Algebra"
-
+        class1.students.add(student)
+        classService.save(class1)
 
     }
 }

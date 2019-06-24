@@ -1,11 +1,12 @@
 package com.intworkers.application.service.schoolsystem
 
 import com.intworkers.application.model.schoolsystem.Course
+import org.springframework.data.domain.Pageable
 
 interface ClassService {
     fun findById(id: Long): Course
 
-    fun findAll(): MutableList<Course>
+    fun findAll(pageable: Pageable): MutableList<Course>
 
     fun save(classToSave: Course): Course
 
@@ -15,5 +16,5 @@ interface ClassService {
 
     fun assignToSchool(classId: Long, schoolId: Long)
 
-    fun removeFromSchool(classId: Long, schoolId: Long)
+    fun removeFromSchool(classId: Long)
 }

@@ -5,6 +5,8 @@ import com.intworkers.application.model.schoolsystem.Course
 import com.intworkers.application.repository.schoolsystem.ClassRepository
 import com.intworkers.application.repository.schoolsystem.SchoolRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -24,13 +26,14 @@ class ClassServiceImpl : ClassService {
                 .orElseThrow { ResourceNotFoundException("Couldn't find class with id $id") }
     }
 
-    override fun findAll(): MutableList<Course> {
+    override fun findAll(pageable: Pageable): MutableList<Course> {
         val classes = mutableListOf<Course>()
-        classRepository.findAll().iterator().forEachRemaining { classes.add(it) }
+        classRepository.findAll(pageable).iterator().forEachRemaining { classes.add(it) }
         return classes
     }
 
     @Transactional
+    @Modifying
     override fun save(classToSave: Course): Course {
         val newClass = Course()
         newClass.className = classToSave.className
@@ -43,6 +46,7 @@ class ClassServiceImpl : ClassService {
     }
 
     @Transactional
+    @Modifying
     override fun update(classToUpdate: Course, id: Long): Course {
         val updatedClass = classRepository.findById(id)
                 .orElseThrow { ResourceNotFoundException("Couldn't find class with id $id ") }
@@ -56,6 +60,7 @@ class ClassServiceImpl : ClassService {
     }
 
     @Transactional
+    @Modifying
     override fun delete(id: Long) {
         if (classRepository.findById(id).isPresent)
             classRepository.deleteById(id)
@@ -71,10 +76,9 @@ class ClassServiceImpl : ClassService {
     }
 
     @Transactional
-    override fun removeFromSchool(classId: Long, schoolId: Long) {
-        if (classRepository.findById(classId).isPresent
-                && schoolRepository.findById(schoolId).isPresent)
-        classRepository.removeFromSchool(classId, schoolId)
+    override fun removeFromSchool(classId: Long) {
+        if (classRepository.findById(classId).isPresent)
+        classRepository.removeFromSchool(classId)
         else throw ResourceNotFoundException("Couldn't find class or School")
     }
 }

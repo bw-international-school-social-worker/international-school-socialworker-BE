@@ -4,6 +4,7 @@ import com.intworkers.application.exception.ResourceNotFoundException
 import com.intworkers.application.model.schoolsystem.Student
 import com.intworkers.application.repository.schoolsystem.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
@@ -33,9 +34,9 @@ class StudentServiceImpl: StudentService {
                 .orElseThrow{ResourceNotFoundException("Student with id $id not found")}
     }
 
-    override fun findAll(): MutableList<Student> {
+    override fun findAll(pageable: Pageable): MutableList<Student> {
         val students = mutableListOf<Student>()
-        studentRepository.findAll().iterator().forEachRemaining{students.add(it)}
+        studentRepository.findAll(pageable).iterator().forEachRemaining{students.add(it)}
         return students
     }
 

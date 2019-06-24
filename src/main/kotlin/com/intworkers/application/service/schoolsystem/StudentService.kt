@@ -1,11 +1,12 @@
 package com.intworkers.application.service.schoolsystem
 
 import com.intworkers.application.model.schoolsystem.Student
+import org.springframework.data.domain.Pageable
 
 interface StudentService {
     fun findById(id: Long): Student
 
-    fun findAll(): MutableList<Student>
+    fun findAll(pageable: Pageable): MutableList<Student>
 
     fun save(student: Student): Student
 
