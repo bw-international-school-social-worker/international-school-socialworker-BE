@@ -39,7 +39,7 @@ Body:
 
 #### Login and get access token
 
-`curl -X POST --user "intworkers:lambdaintworkers" -d "grant_type=password&username=admin&password=password" http://jrmmba-restaurants.heroku.com/oauth/token`
+`curl -X POST --user "intworkers:lambdaintworkers" -d "grant_type=password&username=admin&password=password" http://lambda-intschools.herokuapp.com/oauth/token`
 
 `POST: /oauth/token`
 
