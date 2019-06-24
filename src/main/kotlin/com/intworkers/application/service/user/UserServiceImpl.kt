@@ -101,4 +101,8 @@ class UserServiceImpl : UserDetailsService, UserService {
         }
 
     }
+
+    override fun findByUsername(username: String): User {
+        return userrepos.findByUsername(username)
+    }
 }

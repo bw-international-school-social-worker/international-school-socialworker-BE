@@ -29,6 +29,7 @@ class SocialWorkerServiceImpl : SocialWorkerService {
     override fun save(socialWorker: SocialWorker): SocialWorker {
         val newWorker = SocialWorker()
         if (socialWorker.user != null) {
+            newWorker.workerid = socialWorker.workerid
             newWorker.user = socialWorker.user
             newWorker.email = socialWorker.email
             newWorker.firstName = socialWorker.firstName

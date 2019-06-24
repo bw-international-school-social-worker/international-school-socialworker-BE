@@ -30,6 +30,7 @@ class SchoolAdminServiceImpl: SchoolAdminService {
     override fun save(schoolAdmin: SchoolAdmin): SchoolAdmin {
         val newAdmin = SchoolAdmin()
         if (schoolAdmin.user != null) {
+            newAdmin.adminId = schoolAdmin.adminId
             newAdmin.user = schoolAdmin.user
             newAdmin.email = schoolAdmin.email
             newAdmin.firstName = schoolAdmin.firstName

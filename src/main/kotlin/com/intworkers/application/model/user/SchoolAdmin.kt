@@ -1,5 +1,6 @@
 package com.intworkers.application.model.user
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.intworkers.application.model.schoolsystem.School
 import java.io.Serializable
@@ -15,6 +16,7 @@ class SchoolAdmin(
 
         @OneToOne
         @JoinColumn(name = "adminId")
+        @JsonIgnore
         var user: User? = null,
 
         @Column(nullable = true)

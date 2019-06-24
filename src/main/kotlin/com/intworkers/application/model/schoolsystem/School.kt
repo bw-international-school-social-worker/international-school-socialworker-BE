@@ -35,6 +35,7 @@ class School(
 
         @OneToMany(mappedBy = "school", cascade = [CascadeType.ALL],
                 orphanRemoval = true)
+        @JsonIgnoreProperties("school")
         var classes: MutableList<Course> = mutableListOf(),
 
         @OneToMany(mappedBy = "school", cascade = [CascadeType.ALL],

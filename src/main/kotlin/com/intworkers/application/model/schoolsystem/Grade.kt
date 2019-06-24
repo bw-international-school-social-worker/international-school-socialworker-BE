@@ -11,6 +11,7 @@ class Grade(
 
         @ManyToOne
         @JoinColumn(name = "schoolId")
+        @JsonIgnoreProperties("grades")
         var school: School? = null,
 
         @OneToMany(mappedBy = "grade", cascade = [CascadeType.ALL],

@@ -1,6 +1,8 @@
 package com.intworkers.application.model.user
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.schoolsystem.Organization
 import com.intworkers.application.model.schoolsystem.School
 import com.intworkers.application.model.schoolsystem.Student
 import com.intworkers.application.model.schoolsystem.Visit
@@ -18,6 +20,7 @@ class SocialWorker(
 
         @OneToOne
         @JoinColumn(name = "workerId")
+        @JsonIgnore
         var user: User? = null,
 
         @Column(nullable = true)
@@ -39,6 +42,7 @@ class SocialWorker(
         @JoinTable(name = "workerSchools",
                 joinColumns = [JoinColumn(name = "workerId")],
                 inverseJoinColumns = [JoinColumn(name = "schoolId")])
+        @JsonIgnoreProperties("workers")
         var schools: MutableList<School> = mutableListOf(),
 
         @OneToMany(mappedBy = "worker", cascade = [CascadeType.ALL],
@@ -49,7 +53,12 @@ class SocialWorker(
         @OneToMany(mappedBy = "worker", cascade = [CascadeType.ALL],
                 orphanRemoval = false)
         @JsonIgnoreProperties("worker")
-        var students: MutableList<Student> = mutableListOf()
+        var students: MutableList<Student> = mutableListOf(),
+
+        @ManyToOne
+        @JoinColumn(name = "organizationId")
+        @JsonIgnoreProperties("workers")
+        var organization: Organization? = null
 ): Serializable /* {
         override fun equals(o: Any?): Boolean {
                 if (this === o) {

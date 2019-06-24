@@ -13,4 +13,6 @@ interface UserService {
     fun save(user: User): User
 
     fun update(user: User, id: Long): User
+
+    fun findByUsername(username: String): User
 }
