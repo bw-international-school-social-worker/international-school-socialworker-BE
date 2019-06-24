@@ -111,3 +111,41 @@ Body:
 #### Find all Social Workers
 *Will only be accessible to School Admins.*
 `GET: /socialworkers/all`
+
+### School Endpoints
+
+#### Find School by School Id
+*Can only be accessible to Social Workers*
+`GET: /schools/school/{id}`
+
+#### Find all School
+*Can only be accessible to Social Workers*
+`GET: /schools/all`
+
+#### Create a School 
+*Can only be accessible to School Admins and a school admin can only own one school*
+`POST: schools/myschool`
+```
+All fields are optional
+Body: 
+{
+    "schoolName": "string",
+    "establishedDate": "string"
+}
+```
+#### Update a School
+*Can only be accessed by School Admins and the school admin can only update his/her own school*
+`PUT: schools/myschool`
+```
+All fields are optional
+Body: 
+{
+    "schoolName": "string",
+    "establishedDate": "string"
+}
+```
+
+#### Delete a School
+*Can only be accessed by School Admins and the school admin can only delete his/her own school*
+`DELETE: schools/myschool`
+
