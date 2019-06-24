@@ -2,7 +2,7 @@
 # international-school-socialworker-BE
 
 
-```https://buildtipsease.herokuapp.com```
+```https://lambda-intschools.herokuapp.com```
 
 ## ENDPOINTS
 
