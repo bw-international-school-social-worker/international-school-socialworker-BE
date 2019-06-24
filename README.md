@@ -44,11 +44,13 @@ Body:
 `POST: /oauth/token`
 
 ``` 
-AUTHBASE64 = "intworkers:lambdaintworkers" // encode this string into base64 
-Header "Authorization":"Basic AUTHBASE64" // then replace it here
-Body x-www-form-urlencoded
+Headers: 
+Authorization: Basic aW50d29ya2VyczpsYW1iZGFpbnR3b3JrZXJz
+Content-Type: application/x-www-form-urlencoded
+Body:
 grant_type : password
 username : your username
 password : your password
 ```
+The request grants an "access_token" in the json response and must be sent in as a header Authorization: Bearer access_token_here
 
