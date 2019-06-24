@@ -2,15 +2,24 @@ package com.intworkers.application.service.schoolsystem
 
 import com.intworkers.application.exception.ResourceNotFoundException
 import com.intworkers.application.model.schoolsystem.School
+import com.intworkers.application.repository.schoolsystem.SchoolAdminRepository
 import com.intworkers.application.repository.schoolsystem.SchoolRepository
+import com.intworkers.application.repository.user.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
 @Component
 @Service(value = "schoolService")
 class SchoolServiceImpl: SchoolService {
+
+    @Autowired
+    private lateinit var userRepository: UserRepository
+
+    @Autowired
+    private lateinit var schoolAdminRepository: SchoolAdminRepository
 
     @Autowired
     private lateinit var schoolRepository: SchoolRepository
@@ -27,10 +36,14 @@ class SchoolServiceImpl: SchoolService {
     }
 
     override fun save(school: School): School {
+        val authentication = SecurityContextHolder.getContext().authentication
+        val currentUser = userRepository.findByUsername(authentication.name)
+        val schoolAdmin = schoolAdminRepository.findById(currentUser.userId)
+                .orElseThrow { ResourceNotFoundException ("Couldn't find School Admin") }
         val newSchool = School()
         newSchool.schoolName = school.schoolName
         newSchool.dateEstablished = school.dateEstablished
-        newSchool.schoolAdmin = school.schoolAdmin
+        newSchool.schoolAdmin = schoolAdmin
         return schoolRepository.save(newSchool)
     }
 

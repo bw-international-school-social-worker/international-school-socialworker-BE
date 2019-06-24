@@ -38,17 +38,23 @@ class UserSeedData : CommandLineRunner {
 
     @Throws(Exception::class)
     override fun run(vararg args: String) {
-        val r1 = Role("schooladmin")
+         val r1 = Role("schooladmin")
         roleService.save(r1)
         val r2 = Role("socialworker")
         roleService.save(r2)
         val r3 = Role("admin")
         roleService.save(r3)
 
-
+        val role = Role()
+        role.roleId = 3
         val admins = mutableListOf<UserRoles>()
-        admins.add(UserRoles(User(), r1))
-        var user1 = User("schooladmin", "password", admins)
+        admins.add(UserRoles(User(), role))
+        var user3 = User("admin", "password", admins)
+        user3 = userService.save(user3)
+
+         val schooladmins = mutableListOf<UserRoles>()
+        schooladmins.add(UserRoles(User(), r1))
+        var user1 = User("schooladmin", "password", schooladmins)
         user1 = userService.save(user1)
         val schoolAdmin = SchoolAdmin()
         schoolAdmin.user = user1
@@ -63,22 +69,6 @@ class UserSeedData : CommandLineRunner {
         socialWorker.user = user2
         socialWorker.workerid = user2.userId
         socialWorkerService.save(socialWorker)
-
-        /* val workers = mutableListOf<UserRoles>()
-        workers.add(UserRoles(User(), r2))
-        var admin2 = User("worker", "password", admins)
-        admin2 = userService.save(admin2)
-
-        var student = Student()
-        student.firstName = "Vivek"
-        student.lastName = "V"
-        student = studentService.save(student)
-        studentService.assignToWorker(student.studentId, admin2.userId)
-
-        var class1 = Course()
-        class1.className = "Algebra"
-        class1.students.add(student)
-        classService.save(class1)*/
 
     }
 }

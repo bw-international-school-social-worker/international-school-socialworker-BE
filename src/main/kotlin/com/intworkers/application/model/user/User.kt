@@ -1,5 +1,6 @@
 package com.intworkers.application.model.user
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.intworkers.application.model.schoolsystem.School
@@ -31,12 +32,12 @@ class User {
 
         @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL],
                 orphanRemoval = true)
-        @JsonIgnoreProperties("user")
+        @JsonIgnore
         var worker: SocialWorker? = null
 
         @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL],
                 orphanRemoval = true)
-        @JsonIgnoreProperties("user")
+        @JsonIgnore
         var admin: SchoolAdmin? = null
 
         constructor()
