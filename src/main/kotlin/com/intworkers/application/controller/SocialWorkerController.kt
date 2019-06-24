@@ -30,6 +30,11 @@ class SocialWorkerController {
         return ResponseEntity(workers, HttpStatus.OK)
     }
 
+    @GetMapping(value = ["/worker/{id}"], produces = ["application/json"])
+    fun findById(@PathVariable id: Long): ResponseEntity<*> {
+        return ResponseEntity(socialWorkerService.findById(id), HttpStatus.OK)
+    }
+
     @GetMapping(value = ["/myinfo"], produces = ["application/json"])
     fun currentWorkerInfo(authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username

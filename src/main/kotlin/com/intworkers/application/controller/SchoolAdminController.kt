@@ -31,6 +31,11 @@ class SchoolAdminController {
         return ResponseEntity(admins, HttpStatus.OK)
     }
 
+    @GetMapping(value = ["/admin/{id}"], produces = ["application/json"])
+    fun findById(@PathVariable id: Long): ResponseEntity<*> {
+        return ResponseEntity(schoolAdminService.findById(id), HttpStatus.OK)
+    }
+
     @GetMapping(value = ["/myinfo"], produces = ["application/json"])
     fun currentAdminInfo(authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
