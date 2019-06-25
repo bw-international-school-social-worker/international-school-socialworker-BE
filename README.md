@@ -139,10 +139,9 @@ Body:
 
 ```POST: /schools/myschool```
 ```
-All fields are optional
 Body: 
 {
-    "schoolName": "string",
+    "schoolName": "string", (required)
     "dateEstablished": "string"
 }
 ```
