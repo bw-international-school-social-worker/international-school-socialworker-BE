@@ -297,7 +297,7 @@ Body:
 #### Update an existing student
 *Can only be accessed by School Admins. The student has to be enrolled in the currently logged in School Admin's school.*
 
-```POST: /students/update/{id}```
+```PUT: /students/update/{id}```
 
 ```
 All fields are optional
