@@ -1,5 +1,6 @@
 package com.intworkers.application.model.schoolsystem
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.intworkers.application.model.user.SocialWorker
 import com.intworkers.application.model.user.User
@@ -43,23 +44,35 @@ class Student(
 
         @ManyToOne
         @JoinColumn(name = "gradeId")
-        @JsonIgnoreProperties("students")
+        @JsonIgnore
         var grade: Grade? = null,
+
+        @Column(name = "gradeId", insertable = false, updatable = false)
+        var gradeId: Long? = 0,
 
         @ManyToOne
         @JoinColumn(name = "classId")
-        @JsonIgnoreProperties("students")
+        @JsonIgnore
         var studentClass: Course? = null,
+
+        @Column(name = "classId", insertable = false, updatable = false)
+        var classId: Long? = 0,
 
         @ManyToOne
         @JoinColumn(name = "schoolId")
-        @JsonIgnoreProperties("students")
+        @JsonIgnore
         var school: School? = null,
+
+        @Column(name = "schoolId", insertable = false, updatable = false)
+        var schoolId: Long? = 0,
 
         @ManyToOne
         @JoinColumn(name = "workerId", referencedColumnName = "workerId")
-        @JsonIgnoreProperties("students")
-        var worker: SocialWorker? = null
+        @JsonIgnore
+        var worker: SocialWorker? = null,
+
+        @Column(name = "workerId", insertable = false, updatable = false)
+        var workerId: Long? = 0
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

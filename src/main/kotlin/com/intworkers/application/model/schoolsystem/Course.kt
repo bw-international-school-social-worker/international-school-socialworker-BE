@@ -1,5 +1,6 @@
 package com.intworkers.application.model.schoolsystem
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
@@ -11,8 +12,11 @@ class Course(
 
         @ManyToOne
         @JoinColumn(name = "schoolId")
-        @JsonIgnoreProperties("classes")
+        @JsonIgnore
         var school: School? = null,
+
+        @Column(name = "schoolId", insertable = false, updatable = false)
+        var schoolId: Long? = 0,
 
         @OneToMany(mappedBy = "studentClass", cascade = [CascadeType.ALL],
                 orphanRemoval = false)

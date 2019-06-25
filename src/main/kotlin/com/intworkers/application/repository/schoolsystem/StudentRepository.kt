@@ -3,9 +3,10 @@ package com.intworkers.application.repository.schoolsystem
 import com.intworkers.application.model.schoolsystem.Student
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.PagingAndSortingRepository
 
-interface StudentRepository: PagingAndSortingRepository<Student, Long> {
+interface StudentRepository: CrudRepository<Student, Long> {
     @Modifying
     @Query("UPDATE students SET worker_id = :workerId WHERE student_id = :studentId ", nativeQuery = true)
     fun assignToWorker(studentId: Long, workerId: Long)

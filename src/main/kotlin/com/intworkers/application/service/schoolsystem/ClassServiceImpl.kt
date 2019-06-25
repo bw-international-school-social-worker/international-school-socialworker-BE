@@ -38,10 +38,6 @@ class ClassServiceImpl : ClassService {
         val newClass = Course()
         newClass.className = classToSave.className
         newClass.school = classToSave.school
-        for (student in classToSave.students) {
-            newClass.students.add(student)
-            student.studentClass = newClass
-        }
         return classRepository.save(newClass)
     }
 
@@ -52,10 +48,6 @@ class ClassServiceImpl : ClassService {
                 .orElseThrow { ResourceNotFoundException("Couldn't find class with id $id ") }
         if (classToUpdate.className != null) updatedClass.className = classToUpdate.className
         if (classToUpdate.school != null) updatedClass.school = classToUpdate.school
-        for (student in classToUpdate.students) {
-            updatedClass.students.add(student)
-            student.studentClass = updatedClass
-        }
         return classRepository.save(updatedClass)
     }
 

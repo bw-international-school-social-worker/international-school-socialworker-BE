@@ -27,13 +27,25 @@ class SchoolController {
     private lateinit var schoolAdminService: SchoolAdminService
 
     @GetMapping(value = ["/school/{id}"], produces = ["application/json"])
-    fun findById(id: Long): ResponseEntity<*> {
+    fun findById(@PathVariable id: Long): ResponseEntity<*> {
         return ResponseEntity(schoolService.findById(id), HttpStatus.OK)
     }
 
     @GetMapping(value = ["/all"], produces = ["application/json"])
     fun findAll(pageable: Pageable): ResponseEntity<*> {
         return ResponseEntity(schoolService.findAll(pageable), HttpStatus.OK)
+    }
+
+    @GetMapping(value = ["/myschool"], produces = ["application/json"])
+    fun getMySchool(authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        val schoolAdmin = schoolAdminService.findById(user.userId)
+        return if (schoolAdmin.school != null) {
+            ResponseEntity(schoolService.findById(schoolAdmin.school!!.schoolId), HttpStatus.CREATED)
+        } else {
+            ResponseEntity(HttpStatus.CONFLICT)
+        }
     }
 
     @PostMapping(value = ["/myschool"], consumes = ["application/json"], produces = ["application/json"])
