@@ -243,10 +243,10 @@ Body:
 } 
 ```
 
-#### Delete a grade from currently logged in School Admin's School
-*Can only be accessed by School Admins. The grade has to belong to currently logged in School Admin
+#### Delete a class from currently logged in School Admin's School
+*Can only be accessed by School Admins. The class has to belong to currently logged in School Admin
 
-```DELETE: /grades/delete/{id}```
+```DELETE: /classes/delete/{id}```
 
 
 
