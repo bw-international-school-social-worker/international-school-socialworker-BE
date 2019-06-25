@@ -139,10 +139,9 @@ Body:
 
 ```POST: /schools/myschool```
 ```
-All fields are optional
 Body: 
 {
-    "schoolName": "string",
+    "schoolName": "string", (required)
     "dateEstablished": "string"
 }
 ```
@@ -202,7 +201,7 @@ Body:
 ```
 
 #### Delete a grade from currently logged in School Admin's School
-*Can only be accessed by School Admins. The grade has to belong to currently logged in School Admin
+*Can only be accessed by School Admins. The grade has to belong to currently logged in School Admin*
 
 ```DELETE: /grades/delete/{id}```
 
@@ -244,9 +243,83 @@ Body:
 ```
 
 #### Delete a class from currently logged in School Admin's School
-*Can only be accessed by School Admins. The class has to belong to currently logged in School Admin
+*Can only be accessed by School Admins. The class has to belong to currently logged in School Admin*
 
 ```DELETE: /classes/delete/{id}```
+
+### Student Endpoints
+
+#### Find an existing student by Id
+*Accessible to all accounts*
+
+```GET: /students/student/{id}```
+
+#### Find all students
+*Accessible to all accounts*
+
+```GET: students/all```
+
+#### Find all students assigned to currently logged in Social Worker
+*Can only be accessed by Social Worker accounts and will only return students that are currently assigned to the logged in Social Worker*
+
+```GET: students/socialworker/all```
+
+#### Find all students enrolled in currently logged in School Admin's school
+*Can only be accessed by School Admins and will only return students that are enrolled in currently logged in School Admin's school*
+
+```GET: students/schooladmin/all```
+
+#### Create a new student 
+*Can only be accessed by School Admins.*
+**The School Admin has to be assigned to a school in order to create a student. The student will automatically be enrolled in the School Admin's school once created**
+
+```POST: /students/new```
+
+```
+All fields are optional
+Body: 
+{
+   "firstName": "string",
+   "lastName": "string", 
+   "photoUrl": "string", 
+   "backgroundStory": "string",
+   "status": "string",
+   "age": integer, 
+   "hasInsurance": boolean, 
+   "insuranceExpiration": "string", 
+   "hasBirthCertificate": boolean, 
+   "specialNeeds": "string", 
+   "contactInfo": "string" 
+}
+```
+
+#### Update an existing student
+*Can only be accessed by School Admins. The student has to be enrolled in the currently logged in School Admin's school.*
+
+```PUT: /students/update/{id}```
+
+```
+All fields are optional
+Body: 
+{
+   "firstName": "string",
+   "lastName": "string", 
+   "photoUrl": "string", 
+   "backgroundStory": "string",
+   "status": "string",
+   "age": integer, 
+   "hasInsurance": boolean, 
+   "insuranceExpiration": "string", 
+   "hasBirthCertificate": boolean, 
+   "specialNeeds": "string", 
+   "contactInfo": "string" 
+}
+```
+
+#### Delete a student
+*Can only be accessed by School Admins. The student must be enrolled in the currently logged in School Admin's school*
+
+```DELETE: /students/delete/{id}```
 
 
 
