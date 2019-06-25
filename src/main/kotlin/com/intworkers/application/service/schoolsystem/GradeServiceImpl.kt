@@ -40,10 +40,6 @@ class GradeServiceImpl : GradeService {
         val newGrade = Grade()
         newGrade.gradeNumber = grade.gradeNumber
         newGrade.school = grade.school
-        for (student in grade.students) {
-            newGrade.students.add(student)
-            student.grade = newGrade
-        }
         return gradeRepository.save(newGrade)
     }
 
@@ -54,10 +50,6 @@ class GradeServiceImpl : GradeService {
                 .orElseThrow { ResourceNotFoundException("Couldn't find grade with id $id ") }
         if (grade.gradeNumber != null) updatedGrade.gradeNumber = grade.gradeNumber
         if (grade.school != null) updatedGrade.school = grade.school
-        for (student in grade.students) {
-            updatedGrade.students.add(student)
-            student.grade = updatedGrade
-        }
         return gradeRepository.save(updatedGrade)
     }
 

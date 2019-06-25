@@ -17,6 +17,7 @@ class School(
 
         @OneToOne
         @JoinColumn(name = "adminId", referencedColumnName = "adminId")
+        @JsonIgnoreProperties("school")
         var schoolAdmin: SchoolAdmin? = null,
 
         @ManyToMany(mappedBy = "schools")

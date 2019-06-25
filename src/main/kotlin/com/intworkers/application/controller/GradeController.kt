@@ -33,7 +33,7 @@ class GradeController {
         return ResponseEntity(gradeService.findAll(pageable), HttpStatus.OK)
     }
 
-    @GetMapping(value = ["/myGrades"], produces = ["application/json"])
+    @GetMapping(value = ["/mygrades"], produces = ["application/json"])
     fun findMyGrades(pageable: Pageable, authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
@@ -53,6 +53,7 @@ class GradeController {
         val user = userService.findByUsername(username)
         val schoolAdmin = schoolAdminService.findById(user.userId)
         if (schoolAdmin.school == null) throw ResourceNotFoundException("Admin is not assigned to a school")
+        grade.school = schoolAdmin.school
         val savedGrade = gradeService.save(grade)
         gradeService.assignToSchool(savedGrade.gradeId, schoolAdmin.adminId)
         return ResponseEntity(gradeService.findById(savedGrade.gradeId), HttpStatus.CREATED)

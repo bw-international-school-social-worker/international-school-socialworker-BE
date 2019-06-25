@@ -32,7 +32,7 @@ class ClassController {
         return ResponseEntity(classService.findAll(pageable), HttpStatus.OK)
     }
 
-    @GetMapping(value = ["/myClasses"], produces = ["application/json"])
+    @GetMapping(value = ["/myclasses"], produces = ["application/json"])
     fun findMyClasses(pageable: Pageable, authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
@@ -52,8 +52,8 @@ class ClassController {
         val user = userService.findByUsername(username)
         val schoolAdmin = schoolAdminService.findById(user.userId)
         if (schoolAdmin.school == null) throw ResourceNotFoundException("Admin is not assigned to a school")
+        course.school = schoolAdmin.school
         val savedClass = classService.save(course)
-        classService.assignToSchool(savedClass.classId, schoolAdmin.adminId)
         return ResponseEntity(classService.findById(savedClass.classId), HttpStatus.CREATED)
     }
 
