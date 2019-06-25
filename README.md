@@ -57,9 +57,11 @@ The request grants an "access_token" in the JSON response and must be sent in as
 ### School Admin Information Endpoints
 
 #### Get  information of currently logged in School Admin
+
 ```GET: /schooladmins/myinfo```
 
 #### Update information of currently logged in School Admin
+
 ```PUT: /schooladmins/myinfo````
 ```
 All fields are optional
@@ -73,22 +75,27 @@ Body:
 }
 ```
 #### Delete currently logged in user
+
 ```DELETE: /schooladmins/myinfo```
 
 #### Find School Admin by Id
 *Will only be accessible to an administrative account. Not accessible by School Admins or Social Workers.*
+
 ```GET: /schooladmins/{id}```
 
 #### Find all School Admins
 *Will only be accessible to an administrative account. Not accessible by School Admins or Social Workers.*
+
 ```GET: /schooladmins/all```
 
 ### Social Worker Information Endpoints
 
 #### Get  information of currently logged in Social Worker
+
 ```GET: /socialworkers/myinfo```
 
 #### Update information of currently logged in Social Worker
+
 ```PUT: /socialworkers/myinfo```
 ```
 All fields are optional
@@ -102,28 +109,34 @@ Body:
 }
 ```
 #### Delete currently logged in user
+
 ```DELETE: /socialworkers/myinfo```
 
 #### Find Social Worker by Id
 *Will only be accessible to School Admins.*
+
 ```GET: /socialworkers/{id}```
 
 #### Find all Social Workers
 *Will only be accessible to School Admins.*
+
 ```GET: /socialworkers/all```
 
 ### School Endpoints
 
 #### Find School by School Id
 *Can only be accessible to Social Workers*
+
 ```GET: /schools/school/{id}```
 
 #### Find all School
 *Can only be accessible to Social Workers*
+
 ```GET: /schools/all```
 
 #### Create a School 
 *Can only be accessible to School Admins and a school admin can only own one school*
+
 ```POST: /schools/myschool```
 ```
 All fields are optional
@@ -135,6 +148,7 @@ Body:
 ```
 #### Update a School
 *Can only be accessed by School Admins and the school admin can only update his/her own school*
+
 ```PUT: /schools/myschool```
 ```
 All fields are optional
@@ -143,9 +157,99 @@ Body:
     "schoolName": "string",
     "dateEstablished": "string"
 }
-```/
+```
 
 #### Delete a School
 *Can only be accessed by School Admins and the school admin can only delete his/her own school*
+
 ```DELETE: /schools/myschool```
+
+### Grade Endpoints
+
+#### View all grades and students within
+*Can only be accessed by an administrative account. Cannot by accessed by School Admins or Social Workers*
+
+```GET: /grades/all```
+
+#### View all grades and students in currently logged in School Admin's school
+*Can only be accessed by School Admins*
+
+```GET: /grades/mygrades```
+
+#### Create a new grade in currently logged in School Admin's school
+*Can only be accessed by School Admins*
+
+```POST: /grades/new```
+
+```
+All fields are optional
+Body: 
+{
+   "gradeNumber": integer
+} 
+```
+#### Update a grade in currently logged in School Admin's school
+*Can only be accessed by School Admins. The grade has to belong to currently logged in School Admin*
+
+```PUT: /grades/update/{id}```
+
+```
+All fields are optional
+Body: 
+{
+   "gradeNumber": integer
+} 
+```
+
+#### Delete a grade from currently logged in School Admin's School
+*Can only be accessed by School Admins. The grade has to belong to currently logged in School Admin
+
+```DELETE: /grades/delete/{id}```
+
+### Class Endpoints
+
+#### View all classes and students within
+*Can only be accessed by an administrative account. Cannot by accessed by School Admins or Social Workers*
+
+```GET: /classes/all```
+
+#### View all classes and students in currently logged in School Admin's school
+*Can only be accessed by School Admins*
+
+```GET: /classes/mygrades```
+
+#### Create a new class in currently logged in School Admin's school
+*Can only be accessed by School Admins*
+
+```POST: /classes/new```
+
+```
+All fields are optional
+Body: 
+{
+   "className": "string"
+} 
+```
+#### Update a class in currently logged in School Admin's school
+*Can only be accessed by School Admins. The class has to belong to currently logged in School Admin*
+
+```PUT: /classes/update/{id}```
+
+```
+All fields are optional
+Body: 
+{
+   "className": integer
+} 
+```
+
+#### Delete a class from currently logged in School Admin's School
+*Can only be accessed by School Admins. The class has to belong to currently logged in School Admin
+
+```DELETE: /classes/delete/{id}```
+
+
+
+
+
 
