@@ -320,7 +320,7 @@ Body:
 #### Delete a student
 *Can only be accessed by School Admins. The student must be enrolled in the currently logged in School Admin's school*
 
-```DELETE: /students/delete/{id}
+```DELETE: /students/delete/{id}```
 
 
 
