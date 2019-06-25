@@ -42,23 +42,26 @@ class SocialWorker(
         @JoinTable(name = "workerSchools",
                 joinColumns = [JoinColumn(name = "workerId")],
                 inverseJoinColumns = [JoinColumn(name = "schoolId")])
-        @JsonIgnoreProperties("workers")
+        @JsonIgnore
         var schools: MutableList<School> = mutableListOf(),
 
         @OneToMany(mappedBy = "worker", cascade = [CascadeType.ALL],
                 orphanRemoval = false)
-        @JsonIgnoreProperties("worker")
+        @JsonIgnore
         var visits: MutableList<Visit> = mutableListOf(),
 
         @OneToMany(mappedBy = "worker", cascade = [CascadeType.ALL],
                 orphanRemoval = false)
-        @JsonIgnoreProperties("worker")
+        @JsonIgnore
         var students: MutableList<Student> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "organizationId")
-        @JsonIgnoreProperties("workers")
-        var organization: Organization? = null
+        @JsonIgnore
+        var organization: Organization? = null,
+
+        @Column(name = "organizationId", insertable = false, updatable = false)
+        var organizationId: Long? = null
 ): Serializable /* {
         override fun equals(o: Any?): Boolean {
                 if (this === o) {

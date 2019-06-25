@@ -79,35 +79,39 @@ class StudentServiceImpl: StudentService {
     }
 
     @Transactional
-    override fun assignToWorker(studentId: Long, workerId: Long) {
-        if (studentRepository.findById(studentId).isPresent
-                && socialWorkerRepository.findById(workerId).isPresent) {
-            studentRepository.assignToWorker(studentId, workerId)
-        } else throw ResourceNotFoundException("Couldn't find student or social worker")
+    @Modifying
+    override fun assignToWorker(studentId: Long, student: Student) {
+        val updateStudent = studentRepository.findById(studentId)
+                .orElseThrow { ResourceNotFoundException("Student with id $studentId not found") }
+        if (student.worker != null) updateStudent.worker = student.worker
+        studentRepository.save(updateStudent)
     }
 
     @Transactional
-    override fun assignToClass(studentId: Long, classId: Long) {
-        if (studentRepository.findById(studentId).isPresent
-                && classRepository.findById(classId).isPresent) {
-            studentRepository.assignToClass(studentId, classId)
-        } else throw ResourceNotFoundException("Couldn't find student or class")
+    @Modifying
+    override fun assignToClass(studentId: Long, student: Student) {
+        val updateStudent = studentRepository.findById(studentId)
+                .orElseThrow { ResourceNotFoundException("Student with id $studentId not found") }
+        if (student.studentClass != null) updateStudent.studentClass = student.studentClass
+        studentRepository.save(updateStudent)
     }
 
     @Transactional
-    override fun assignToGrade(studentId: Long, gradeId: Long) {
-        if (studentRepository.findById(studentId).isPresent
-                && gradeRepository.findById(gradeId).isPresent) {
-            studentRepository.assignToGrade(studentId, gradeId)
-        } else throw ResourceNotFoundException("Couldn't find student or grade")
+    @Modifying
+    override fun assignToGrade(studentId: Long, student: Student) {
+        val updateStudent = studentRepository.findById(studentId)
+                .orElseThrow { ResourceNotFoundException("Student with id $studentId not found") }
+        if (student.grade != null) updateStudent.grade = student.grade
+        studentRepository.save(updateStudent)
     }
 
     @Transactional
-    override fun assignToSchool(studentId: Long, schoolId: Long) {
-        if (studentRepository.findById(studentId).isPresent
-                && schoolRepository.findById(schoolId).isPresent) {
-            studentRepository.assignToSchool(studentId, schoolId)
-        } else throw ResourceNotFoundException("Couldn't find student or school")
+    @Modifying
+    override fun assignToSchool(studentId: Long, student: Student) {
+        val updateStudent = studentRepository.findById(studentId)
+                .orElseThrow { ResourceNotFoundException("Student with id $studentId not found") }
+        if (student.school != null) updateStudent.school = student.school
+        studentRepository.save(updateStudent)
     }
 
     @Transactional
@@ -116,5 +120,35 @@ class StudentServiceImpl: StudentService {
         if (studentRepository.findById(studentId).isPresent)
             studentRepository.deleteById(studentId)
         else throw ResourceNotFoundException("Student with id $studentId not found")
+    }
+
+    @Transactional
+    @Modifying
+    override fun removeFromWorker(studentId: Long, student: Student) {
+        val updateStudent = studentRepository.findById(studentId)
+                .orElseThrow { ResourceNotFoundException("Student with id $studentId not found") }
+        if (student.worker == null) updateStudent.worker = student.worker
+        studentRepository.save(updateStudent)
+    }
+
+    override fun removeFromClass(studentId: Long, student: Student) {
+        val updateStudent = studentRepository.findById(studentId)
+                .orElseThrow { ResourceNotFoundException("Student with id $studentId not found") }
+        if (student.studentClass == null) updateStudent.studentClass = student.studentClass
+        studentRepository.save(updateStudent)
+    }
+
+    override fun removeFromGrade(studentId: Long, student: Student) {
+        val updateStudent = studentRepository.findById(studentId)
+                .orElseThrow { ResourceNotFoundException("Student with id $studentId not found") }
+        if (student.grade == null) updateStudent.grade = student.grade
+        studentRepository.save(updateStudent)
+    }
+
+    override fun removeFromSchool(studentId: Long, student: Student) {
+        val updateStudent = studentRepository.findById(studentId)
+                .orElseThrow { ResourceNotFoundException("Student with id $studentId not found") }
+        if (student.school == null) updateStudent.school = student.school
+        studentRepository.save(updateStudent)
     }
 }

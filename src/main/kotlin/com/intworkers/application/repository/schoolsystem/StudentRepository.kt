@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.PagingAndSortingRepository
 
 interface StudentRepository: CrudRepository<Student, Long> {
-    @Modifying
+    /* @Modifying
     @Query("UPDATE students SET worker_id = :workerId WHERE student_id = :studentId ", nativeQuery = true)
     fun assignToWorker(studentId: Long, workerId: Long)
 
@@ -21,5 +21,5 @@ interface StudentRepository: CrudRepository<Student, Long> {
 
     @Modifying
     @Query("UPDATE students SET school_id = :schoolId WHERE student_id = :studentId ", nativeQuery = true)
-    fun assignToSchool(studentId: Long, schoolId: Long)
+    fun assignToSchool(studentId: Long, schoolId: Long) */
 }

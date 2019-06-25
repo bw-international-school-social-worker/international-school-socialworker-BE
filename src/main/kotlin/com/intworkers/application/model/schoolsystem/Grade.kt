@@ -8,7 +8,7 @@ import javax.persistence.*
 @Table(name = "grades")
 class Grade(
         @Column(nullable = false)
-        var gradeNumber: Int? = 0,
+        var gradeNumber: Int? = null,
 
         @ManyToOne
         @JoinColumn(name = "schoolId")

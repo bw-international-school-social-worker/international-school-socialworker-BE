@@ -105,4 +105,129 @@ class StudentController {
         studentService.delete(id)
         return ResponseEntity(HttpStatus.OK)
     }
+
+    // Todo: Document in README
+    @PostMapping(value = ["{studentId}/assigntoworker/{workerId}"])
+    fun assignToWorker(@PathVariable studentId: Long,
+                       @PathVariable workerId: Long,
+                       authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        val schoolAdmin = schoolAdminService.findById(user.userId)
+        val currentStudent = studentService.findById(studentId)
+        if (currentStudent.school?.schoolId != schoolAdmin.school?.schoolId)
+            throw ResourceNotFoundException("Student does not attend the current admin's school")
+        currentStudent.worker = socialWorkerService.findById(workerId)
+        studentService.assignToWorker(studentId, currentStudent)
+        return ResponseEntity(HttpStatus.CREATED)
+    }
+
+    // Todo: Document in README
+    @PostMapping(value = ["{studentId}/assigntoclass/{classId}"])
+    fun assignToClass(@PathVariable studentId: Long,
+                       @PathVariable classId: Long,
+                       authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        val schoolAdmin = schoolAdminService.findById(user.userId)
+        val currentStudent = studentService.findById(studentId)
+        if (currentStudent.school?.schoolId != schoolAdmin.school?.schoolId)
+            throw ResourceNotFoundException("Student does not attend the current admin's school")
+        currentStudent.studentClass = classService.findById(classId)
+        studentService.assignToClass(studentId, currentStudent)
+        return ResponseEntity(HttpStatus.CREATED)
+    }
+
+    // Todo: Document in README
+    @PostMapping(value = ["{studentId}/assigntograde/{gradeId}"])
+    fun assignToGrade(@PathVariable studentId: Long,
+                      @PathVariable gradeId: Long,
+                      authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        val schoolAdmin = schoolAdminService.findById(user.userId)
+        val currentStudent = studentService.findById(studentId)
+        if (currentStudent.school?.schoolId != schoolAdmin.school?.schoolId)
+            throw ResourceNotFoundException("Student does not attend the current admin's school")
+        currentStudent.grade = gradeService.findById(gradeId)
+        studentService.assignToGrade(studentId, currentStudent)
+        return ResponseEntity(HttpStatus.CREATED)
+    }
+
+    // Todo: Document in README
+    @PostMapping(value = ["{studentId}/assigntoschool/{schoolId}"])
+    fun assignToSchool(@PathVariable studentId: Long,
+                      @PathVariable schoolId: Long,
+                      authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        val schoolAdmin = schoolAdminService.findById(user.userId)
+        val currentStudent = studentService.findById(studentId)
+        if (currentStudent.school?.schoolId != null)
+            throw ResourceNotFoundException("Student currently belongs to a school")
+        currentStudent.school = schoolService.findById(schoolId)
+        studentService.assignToSchool(studentId, currentStudent)
+        return ResponseEntity(HttpStatus.CREATED)
+    }
+
+    // Todo: Document in README
+    @DeleteMapping(value = ["{studentId}/removefromworker"])
+    fun removeFromWorker(@PathVariable studentId: Long,
+                         authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        val schoolAdmin = schoolAdminService.findById(user.userId)
+        val currentStudent = studentService.findById(studentId)
+        if (currentStudent.school?.schoolId != schoolAdmin.school?.schoolId)
+            throw ResourceNotFoundException("Student does not attend the current admin's school")
+        currentStudent.worker = null
+        studentService.update(currentStudent, studentId)
+        return ResponseEntity(HttpStatus.CREATED)
+    }
+
+    // Todo: Document in README
+    @DeleteMapping(value = ["{studentId}/removefromclass"])
+    fun removeFromClass(@PathVariable studentId: Long,
+                         authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        val schoolAdmin = schoolAdminService.findById(user.userId)
+        val currentStudent = studentService.findById(studentId)
+        if (currentStudent.school?.schoolId != schoolAdmin.school?.schoolId)
+            throw ResourceNotFoundException("Student does not attend the current admin's school")
+        currentStudent.studentClass = null
+        studentService.update(currentStudent, studentId)
+        return ResponseEntity(HttpStatus.CREATED)
+    }
+
+    // Todo: Document in README
+    @DeleteMapping(value = ["{studentId}/removefromgrade"])
+    fun removeFromGrade(@PathVariable studentId: Long,
+                        authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        val schoolAdmin = schoolAdminService.findById(user.userId)
+        val currentStudent = studentService.findById(studentId)
+        if (currentStudent.school?.schoolId != schoolAdmin.school?.schoolId)
+            throw ResourceNotFoundException("Student does not attend the current admin's school")
+        currentStudent.grade = null
+        studentService.update(currentStudent, studentId)
+        return ResponseEntity(HttpStatus.CREATED)
+    }
+
+    // Todo: Document in README
+    @DeleteMapping(value = ["{studentId}/removefromschool"])
+    fun removeFromSchool(@PathVariable studentId: Long,
+                        authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        val schoolAdmin = schoolAdminService.findById(user.userId)
+        val currentStudent = studentService.findById(studentId)
+        if (currentStudent.school?.schoolId != schoolAdmin.school?.schoolId)
+            throw ResourceNotFoundException("Student does not attend the current admin's school")
+        currentStudent.school = null
+        studentService.update(currentStudent, studentId)
+        return ResponseEntity(HttpStatus.CREATED)
+    }
+
 }

@@ -2,11 +2,14 @@ package com.intworkers.application.service.schoolsystem
 
 import com.intworkers.application.exception.ResourceNotFoundException
 import com.intworkers.application.model.user.SocialWorker
+import com.intworkers.application.repository.schoolsystem.SchoolRepository
 import com.intworkers.application.repository.schoolsystem.SocialWorkerRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Service(value = "socialWorkerService")
@@ -14,6 +17,9 @@ class SocialWorkerServiceImpl : SocialWorkerService {
 
     @Autowired
     private lateinit var socialWorkerRepository: SocialWorkerRepository
+
+    @Autowired
+    private lateinit var schoolRepository: SchoolRepository
 
     override fun findById(id: Long): SocialWorker {
         return socialWorkerRepository.findById(id)
@@ -26,6 +32,8 @@ class SocialWorkerServiceImpl : SocialWorkerService {
         return workers
     }
 
+    @Transactional
+    @Modifying
     override fun save(socialWorker: SocialWorker): SocialWorker {
         val newWorker = SocialWorker()
         if (socialWorker.user != null) {
@@ -40,6 +48,8 @@ class SocialWorkerServiceImpl : SocialWorkerService {
         return socialWorkerRepository.save(newWorker)
     }
 
+    @Transactional
+    @Modifying
     override fun update(socialWorker: SocialWorker, id: Long): SocialWorker {
         val updatedWorker = socialWorkerRepository.findById(id)
                 .orElseThrow { ResourceNotFoundException("Couldn't find social worker with id $id") }
@@ -51,9 +61,24 @@ class SocialWorkerServiceImpl : SocialWorkerService {
         return socialWorkerRepository.save(updatedWorker)
     }
 
+    @Transactional
+    @Modifying
     override fun delete(id: Long) {
         if (socialWorkerRepository.findById(id).isPresent) {
             socialWorkerRepository.deleteById(id)
         } else throw ResourceNotFoundException("Couldn't find social worker with id $id")
+    }
+
+    @Transactional
+    override fun assignWorkerToSchool(workerId: Long, schoolId: Long) {
+        if (socialWorkerRepository.findById(workerId).isPresent &&
+                schoolRepository.findById(schoolId).isPresent) {
+            socialWorkerRepository.assignWorkerToSchool(workerId, schoolId)
+        }
+    }
+
+    @Transactional
+    override fun removeWorkerFromSchool(workerId: Long, schoolId: Long) {
+        socialWorkerRepository.removeWorkerFromSchool(workerId, schoolId)
     }
 }
