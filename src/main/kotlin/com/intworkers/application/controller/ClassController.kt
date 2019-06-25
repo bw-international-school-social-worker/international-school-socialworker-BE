@@ -53,8 +53,7 @@ class ClassController {
         val schoolAdmin = schoolAdminService.findById(user.userId)
         if (schoolAdmin.school == null) throw ResourceNotFoundException("Admin is not assigned to a school")
         course.school = schoolAdmin.school
-        val savedClass = classService.save(course)
-        return ResponseEntity(classService.findById(savedClass.classId), HttpStatus.CREATED)
+        return ResponseEntity(classService.save(course), HttpStatus.CREATED)
     }
 
     @PutMapping(value = ["/update/{id}"], consumes = ["application/json"], produces = ["application/json"])

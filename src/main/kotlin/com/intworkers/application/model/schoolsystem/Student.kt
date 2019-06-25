@@ -48,7 +48,7 @@ class Student(
         var grade: Grade? = null,
 
         @Column(name = "gradeId", insertable = false, updatable = false)
-        var gradeId: Long = 0,
+        var gradeId: Long? = 0,
 
         @ManyToOne
         @JoinColumn(name = "classId")
@@ -56,7 +56,7 @@ class Student(
         var studentClass: Course? = null,
 
         @Column(name = "classId", insertable = false, updatable = false)
-        var classId: Long = 0,
+        var classId: Long? = 0,
 
         @ManyToOne
         @JoinColumn(name = "schoolId")
@@ -64,7 +64,7 @@ class Student(
         var school: School? = null,
 
         @Column(name = "schoolId", insertable = false, updatable = false)
-        var schoolId: Long = 0,
+        var schoolId: Long? = 0,
 
         @ManyToOne
         @JoinColumn(name = "workerId", referencedColumnName = "workerId")
@@ -72,7 +72,7 @@ class Student(
         var worker: SocialWorker? = null,
 
         @Column(name = "workerId", insertable = false, updatable = false)
-        var workerId: Long = 0
+        var workerId: Long? = 0
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

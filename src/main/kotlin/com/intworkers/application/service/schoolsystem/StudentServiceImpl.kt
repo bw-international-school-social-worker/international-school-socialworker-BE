@@ -34,9 +34,9 @@ class StudentServiceImpl: StudentService {
                 .orElseThrow{ResourceNotFoundException("Student with id $id not found")}
     }
 
-    override fun findAll(pageable: Pageable): MutableList<Student> {
+    override fun findAll(): MutableList<Student> {
         val students = mutableListOf<Student>()
-        studentRepository.findAll(pageable).iterator().forEachRemaining{students.add(it)}
+        studentRepository.findAll().iterator().forEachRemaining{students.add(it)}
         return students
     }
 
@@ -55,6 +55,7 @@ class StudentServiceImpl: StudentService {
         newStudent.status = student.status
         newStudent.photoUrl = student.photoUrl
         newStudent.insuranceExpiration = student.insuranceExpiration
+        newStudent.school = student.school
         return studentRepository.save(newStudent)
     }
 

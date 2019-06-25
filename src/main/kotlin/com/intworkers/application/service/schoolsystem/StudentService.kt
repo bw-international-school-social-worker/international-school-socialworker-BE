@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable
 interface StudentService {
     fun findById(id: Long): Student
 
-    fun findAll(pageable: Pageable): MutableList<Student>
+    fun findAll(): MutableList<Student>
 
     fun save(student: Student): Student
 

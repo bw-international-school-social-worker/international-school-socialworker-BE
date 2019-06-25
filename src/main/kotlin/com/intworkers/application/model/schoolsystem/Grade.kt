@@ -16,7 +16,7 @@ class Grade(
         var school: School? = null,
 
         @Column(name = "schoolId", insertable = false, updatable = false)
-        var schoolId: Long = 0,
+        var schoolId: Long? = 0,
 
         @OneToMany(mappedBy = "grade", cascade = [CascadeType.ALL],
                 orphanRemoval = false)

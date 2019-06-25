@@ -55,7 +55,6 @@ class GradeController {
         if (schoolAdmin.school == null) throw ResourceNotFoundException("Admin is not assigned to a school")
         grade.school = schoolAdmin.school
         val savedGrade = gradeService.save(grade)
-        gradeService.assignToSchool(savedGrade.gradeId, schoolAdmin.adminId)
         return ResponseEntity(gradeService.findById(savedGrade.gradeId), HttpStatus.CREATED)
     }
 
