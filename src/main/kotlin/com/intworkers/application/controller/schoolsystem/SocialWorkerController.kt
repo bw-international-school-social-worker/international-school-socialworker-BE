@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("socialworkers")
+@RequestMapping("/socialworkers")
 class SocialWorkerController {
 
     @Autowired
@@ -50,7 +50,7 @@ class SocialWorkerController {
         return ResponseEntity(socialWorkerService.findById(user.userId), HttpStatus.OK)
     }
 
-    @PutMapping(value = ["myinfo"], consumes = ["application/json"],
+    @PutMapping(value = ["/myinfo"], consumes = ["application/json"],
             produces = ["application/json"])
     fun updateMyInfo(authentication: Authentication,
                      @Valid @RequestBody workerToUpdate: SocialWorker): ResponseEntity<*> {
@@ -59,7 +59,7 @@ class SocialWorkerController {
         return ResponseEntity(socialWorkerService.update(workerToUpdate, user.userId), HttpStatus.OK)
     }
 
-    @DeleteMapping(value = ["myinfo"])
+    @DeleteMapping(value = ["/myinfo"])
     fun deleteMyInfo(authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
@@ -67,7 +67,6 @@ class SocialWorkerController {
         return ResponseEntity(HttpStatus.OK)
     }
 
-    //TODO: Dccument in README
     @PostMapping(value = ["/assigntoschool/{workerId}"])
     fun assignToSchool(@PathVariable workerId: Long,
                        authentication: Authentication
@@ -80,8 +79,7 @@ class SocialWorkerController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
-    //TODO: Dccument in README
-    @DeleteMapping(value = ["removefromschool/{workerId}"])
+    @DeleteMapping(value = ["/removefromschool/{workerId}"])
     fun removeFromSchool(@PathVariable workerId: Long,
                          authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
@@ -89,6 +87,9 @@ class SocialWorkerController {
         val schoolAdmin = schoolAdminService.findById(user.userId)
         if (schoolAdmin.school == null) throw ResourceNotFoundException("School Admin is not assigned to a school")
         socialWorkerService.removeWorkerFromSchool(workerId, schoolAdmin.school!!.schoolId)
+        val worker = socialWorkerService.findById(workerId)
+        worker.students.clear()
+        socialWorkerService.save(worker)
         return ResponseEntity(HttpStatus.OK)
     }
 

@@ -65,7 +65,7 @@ class StudentController {
         val allStudents = studentService.findAll()
         val adminStudents = mutableListOf<Student>()
         for (student in allStudents) {
-            if (student.school?.schoolId ==schoolAdmin.school?.schoolId )
+            if (student.school?.schoolId == schoolAdmin.school?.schoolId)
                 adminStudents.add(student)
         }
         return ResponseEntity(adminStudents, HttpStatus.OK)
@@ -106,7 +106,6 @@ class StudentController {
         return ResponseEntity(HttpStatus.OK)
     }
 
-    // Todo: Document in README
     @PostMapping(value = ["{studentId}/assigntoworker/{workerId}"])
     fun assignToWorker(@PathVariable studentId: Long,
                        @PathVariable workerId: Long,
@@ -122,11 +121,10 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
-    // Todo: Document in README
     @PostMapping(value = ["{studentId}/assigntoclass/{classId}"])
     fun assignToClass(@PathVariable studentId: Long,
-                       @PathVariable classId: Long,
-                       authentication: Authentication): ResponseEntity<Any> {
+                      @PathVariable classId: Long,
+                      authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
         val schoolAdmin = schoolAdminService.findById(user.userId)
@@ -138,7 +136,6 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
-    // Todo: Document in README
     @PostMapping(value = ["{studentId}/assigntograde/{gradeId}"])
     fun assignToGrade(@PathVariable studentId: Long,
                       @PathVariable gradeId: Long,
@@ -154,23 +151,22 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
-    // Todo: Document in README
-    @PostMapping(value = ["{studentId}/assigntoschool/{schoolId}"])
+    @PostMapping(value = ["{studentId}/assigntoschool"])
     fun assignToSchool(@PathVariable studentId: Long,
-                      @PathVariable schoolId: Long,
-                      authentication: Authentication): ResponseEntity<Any> {
+                       authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
         val schoolAdmin = schoolAdminService.findById(user.userId)
         val currentStudent = studentService.findById(studentId)
         if (currentStudent.school?.schoolId != null)
             throw ResourceNotFoundException("Student currently belongs to a school")
-        currentStudent.school = schoolService.findById(schoolId)
+        if (schoolAdmin.school == null)
+            throw ResourceNotFoundException("Current School Admin does not have a School")
+        currentStudent.school = schoolAdmin.school
         studentService.assignToSchool(studentId, currentStudent)
         return ResponseEntity(HttpStatus.CREATED)
     }
 
-    // Todo: Document in README
     @DeleteMapping(value = ["{studentId}/removefromworker"])
     fun removeFromWorker(@PathVariable studentId: Long,
                          authentication: Authentication): ResponseEntity<Any> {
@@ -185,10 +181,9 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
-    // Todo: Document in README
     @DeleteMapping(value = ["{studentId}/removefromclass"])
     fun removeFromClass(@PathVariable studentId: Long,
-                         authentication: Authentication): ResponseEntity<Any> {
+                        authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
         val schoolAdmin = schoolAdminService.findById(user.userId)
@@ -200,7 +195,6 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
-    // Todo: Document in README
     @DeleteMapping(value = ["{studentId}/removefromgrade"])
     fun removeFromGrade(@PathVariable studentId: Long,
                         authentication: Authentication): ResponseEntity<Any> {
@@ -215,10 +209,9 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
-    // Todo: Document in README
     @DeleteMapping(value = ["{studentId}/removefromschool"])
     fun removeFromSchool(@PathVariable studentId: Long,
-                        authentication: Authentication): ResponseEntity<Any> {
+                         authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
         val schoolAdmin = schoolAdminService.findById(user.userId)
