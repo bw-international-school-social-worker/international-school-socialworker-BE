@@ -366,6 +366,64 @@ Body:
 
 ```DELETE: /students/{studentId}/removefromschool```
 
+### Visit Endpoints
+
+#### Find Visit by Id
+*Can be accessed by all accounts*
+
+```GET: /visits/visit/{id}```
+
+#### Find all Visits
+*Cannot be accessed by School Admins or Social Workers. Can only be accessed by administrative account*
+
+```GET: /visits/all```
+
+#### Find all Social Worker Visits
+*Can only be accessed by Social Workers.The returned visits will all belong to the currently logged in Social Worker*
+
+```GET: /visits/socialworker/all```
+
+#### Find all School Visits
+*Can only be accessed by School Admins. The returned visits will all belong to the currently logged in School Admin's school*
+
+```GET: /visits/schooladmin/all```
+
+#### Create a new Visit
+*Can only be accessed by School Admins. The created visit will automatically be assigned to the currently logged in School Admin's school*
+
+```POST: /visits/new/{workerId}```
+
+```
+All fields are optional
+Body: 
+{
+   "visitReason": "string",
+   "visitDescription": "string", 
+   "visitDate": "string"
+}
+```
+
+#### Update an existing Visit
+*Can only be accessed by School Admins. The Visit has to belong to the currently logged in School Admin's school*
+
+```PUT: /visits/update/{visitId}```
+
+```
+All fields are optional
+Body: 
+{
+   "visitReason": "string",
+   "visitDescription": "string", 
+   "visitDate": "string"
+}
+```
+
+#### Delete an existing Visit
+*Can only be accessed by School Admins. The Visit has to belong to the currently logged in School Admin's school*
+
+```DELETE: /visits/delete/{visitId}
+
+
 
 
 
