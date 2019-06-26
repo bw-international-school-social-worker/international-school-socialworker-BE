@@ -6,8 +6,10 @@ import com.intworkers.application.model.user.SocialWorker
 import com.intworkers.application.repository.schoolsystem.SchoolAdminRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Service(value = "schoolAdminService")
@@ -27,6 +29,8 @@ class SchoolAdminServiceImpl: SchoolAdminService {
         return admins
     }
 
+    @Transactional
+    @Modifying
     override fun save(schoolAdmin: SchoolAdmin): SchoolAdmin {
         val newAdmin = SchoolAdmin()
         if (schoolAdmin.user != null) {
@@ -41,6 +45,8 @@ class SchoolAdminServiceImpl: SchoolAdminService {
         return schoolAdminRepository.save(newAdmin)
     }
 
+    @Transactional
+    @Modifying
     override fun update(schoolAdmin: SchoolAdmin, id: Long): SchoolAdmin {
         val updatedAdmin = schoolAdminRepository.findById(id)
                 .orElseThrow { ResourceNotFoundException("Couldn't find school admin with id $id") }
@@ -52,6 +58,8 @@ class SchoolAdminServiceImpl: SchoolAdminService {
         return schoolAdminRepository.save(updatedAdmin)
     }
 
+    @Transactional
+    @Modifying
     override fun delete(id: Long) {
         if (schoolAdminRepository.findById(id).isPresent) {
             schoolAdminRepository.deleteById(id)

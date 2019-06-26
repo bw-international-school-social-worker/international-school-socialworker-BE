@@ -13,4 +13,5 @@ interface ClassRepository: PagingAndSortingRepository<Course, Long> {
     @Modifying
     @Query("UPDATE classes SET school_id = null WHERE class_id = :classId", nativeQuery = true)
     fun removeFromSchool(classId: Long)
+
 }

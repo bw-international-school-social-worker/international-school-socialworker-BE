@@ -1,4 +1,4 @@
-package com.intworkers.application.controller
+package com.intworkers.application.controller.schoolsystem
 
 import com.intworkers.application.model.schoolsystem.School
 import com.intworkers.application.service.schoolsystem.SchoolAdminService
@@ -53,8 +53,9 @@ class SchoolController {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
         val schoolAdmin = schoolAdminService.findById(user.userId)
-        return if (schoolAdmin.school == null) ResponseEntity(schoolService.save(school), HttpStatus.CREATED)
-        else ResponseEntity(HttpStatus.CONFLICT)
+        school.schoolAdmin = schoolAdmin
+        val savedSchool = schoolService.save(school)
+        return ResponseEntity(schoolService.findById(savedSchool.schoolId), HttpStatus.CREATED)
     }
 
     @PutMapping(value = ["/myschool"], consumes = ["application/json"], produces = ["application/json"])

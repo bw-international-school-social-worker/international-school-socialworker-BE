@@ -36,14 +36,10 @@ class SchoolServiceImpl: SchoolService {
     }
 
     override fun save(school: School): School {
-        val authentication = SecurityContextHolder.getContext().authentication
-        val currentUser = userRepository.findByUsername(authentication.name)
-        val schoolAdmin = schoolAdminRepository.findById(currentUser.userId)
-                .orElseThrow { ResourceNotFoundException ("Couldn't find School Admin") }
         val newSchool = School()
         newSchool.schoolName = school.schoolName
         newSchool.dateEstablished = school.dateEstablished
-        newSchool.schoolAdmin = schoolAdmin
+        newSchool.schoolAdmin = school.schoolAdmin
         return schoolRepository.save(newSchool)
     }
 

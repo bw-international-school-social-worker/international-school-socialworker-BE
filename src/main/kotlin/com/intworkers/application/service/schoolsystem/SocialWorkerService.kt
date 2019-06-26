@@ -13,4 +13,8 @@ interface SocialWorkerService {
     fun update(socialWorker: SocialWorker, id: Long): SocialWorker
 
     fun delete(id: Long)
+
+    fun assignWorkerToSchool(workerId: Long, schoolId: Long)
+
+    fun removeWorkerFromSchool(workerId: Long, schoolId: Long)
 }

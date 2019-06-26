@@ -15,7 +15,7 @@ class Visit (
         var worker: SocialWorker? = null,
 
         @Column(name = "workerId", insertable = false, updatable = false)
-        var workerId: Long = 0,
+        var workerId: Long? = 0,
 
         @ManyToOne
         @JoinColumn(name = "schoolId", referencedColumnName = "schoolId")
@@ -23,7 +23,7 @@ class Visit (
         var school: School? = null,
 
         @Column(name = "schoolId", insertable = false, updatable = false)
-        var schoolId: Long = 0,
+        var schoolId: Long? = 0,
 
         @Column
         var visitDate: String? = null,

@@ -38,7 +38,8 @@ class GradeServiceImpl : GradeService {
     @Modifying
     override fun save(grade: Grade): Grade {
         val newGrade = Grade()
-        newGrade.gradeNumber = grade.gradeNumber
+        if (grade.gradeNumber != null) newGrade.gradeNumber = grade.gradeNumber
+        else throw Exception()
         newGrade.school = grade.school
         return gradeRepository.save(newGrade)
     }

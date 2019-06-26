@@ -122,6 +122,16 @@ Body:
 
 ```GET: /socialworkers/all```
 
+#### Assign a Social Worker to current School Admin's school
+*Can only be accessed by School Admins. The Social worker will automatically be assigned to current School Admin's school. Multple Social workers can be assigned to the same school and a Social Worker can be assigned to multiple schools*
+
+```POST: /socialworkers/assigntoschool/{workerId}```
+
+#### Remove a Social Worker from current School Admin's school
+*Can only be accessed by School Admins. The Social worker will also lose all of their assigned students*
+
+```DELETE: /socialworkers/removefromschool/{workerId}```
+
 ### School Endpoints
 
 #### Find School by School Id
@@ -181,10 +191,9 @@ Body:
 ```POST: /grades/new```
 
 ```
-All fields are optional
 Body: 
 {
-   "gradeNumber": integer
+   "gradeNumber": integer (required)
 } 
 ```
 #### Update a grade in currently logged in School Admin's school
@@ -193,10 +202,9 @@ Body:
 ```PUT: /grades/update/{id}```
 
 ```
-All fields are optional
 Body: 
 {
-   "gradeNumber": integer
+   "gradeNumber": integer (required)
 } 
 ```
 
@@ -223,22 +231,19 @@ Body:
 ```POST: /classes/new```
 
 ```
-All fields are optional
 Body: 
 {
-   "className": "string"
+   "className": "string" (required)
 } 
 ```
 #### Update a class in currently logged in School Admin's school
 *Can only be accessed by School Admins. The class has to belong to currently logged in School Admin*
 
 ```PUT: /classes/update/{id}```
-
 ```
-All fields are optional
 Body: 
 {
-   "className": integer
+   "className": integer (required)
 } 
 ```
 
@@ -320,6 +325,112 @@ Body:
 *Can only be accessed by School Admins. The student must be enrolled in the currently logged in School Admin's school*
 
 ```DELETE: /students/delete/{id}```
+
+#### Assign Student to a Social Worker
+*Can only be accessed by School Admins and the student has to be enrolled in the School Admin's school*
+
+```POST: /students/{studentId}/assigntoworker/{workerId}```
+
+#### Assign Student to a Class
+*Can only be accessed by School Admins and the student has to be enrolled in the School Admin's school*
+
+```POST: /students/{studentId}/assigntoclass/{classId}```
+
+#### Assign Student to a Grade
+*Can only be accessed by School Admins and the student has to be enrolled in the School Admin's school*
+
+```POST: /students/{studentId}/assigntograde/{gradeId}```
+
+#### Assign Student to current School Admin's school
+*Can only be accessed by School Admins. The student will automatically be assigned to the currently logged in School Admin's school*
+
+```POST: /students/{studentId}/assigntoschool```
+
+#### Remove a Student's current Social Worker
+*Can only be accessed by School Admins. The student has to be enrolled in the currently logged in School Admin's school*
+
+```DELETE: /students/{studentId}/removefromworker```
+
+#### Remove a Student from current Grade
+*Can only be accessed by School Admins. The student has to be enrolled in the currently logged in School Admin's school*
+
+```DELETE: /students/{studentId}/removefromgrade```
+
+#### Remove a Student from current Class
+*Can only be accessed by School Admins. The student has to be enrolled in the currently logged in School Admin's school*
+
+```DELETE: /students/{studentId}/removefromclass```
+
+#### Remove a Student from current School
+*Can only be accessed by School Admins. The student has to be enrolled in the currently logged in School Admin's school*
+
+```DELETE: /students/{studentId}/removefromschool```
+
+### Visit Endpoints
+
+#### Find Visit by Id
+*Can be accessed by all accounts*
+
+```GET: /visits/visit/{id}```
+
+#### Find all Visits
+*Cannot be accessed by School Admins or Social Workers. Can only be accessed by administrative account*
+
+```GET: /visits/all```
+
+#### Find all Social Worker Visits
+*Can only be accessed by Social Workers.The returned visits will all belong to the currently logged in Social Worker*
+
+```GET: /visits/socialworker/all```
+
+#### Find all School Visits
+*Can only be accessed by School Admins. The returned visits will all belong to the currently logged in School Admin's school*
+
+```GET: /visits/schooladmin/all```
+
+#### Create a new Visit
+*Can only be accessed by School Admins. The created visit will automatically be assigned to the currently logged in School Admin's school*
+
+```POST: /visits/new/{workerId}```
+
+```
+All fields are optional
+Body: 
+{
+   "visitReason": "string",
+   "visitDescription": "string", 
+   "visitDate": "string"
+}
+```
+
+#### Update an existing Visit
+*Can only be accessed by School Admins. The Visit has to belong to the currently logged in School Admin's school*
+
+```PUT: /visits/update/{visitId}```
+
+```
+All fields are optional
+Body: 
+{
+   "visitReason": "string",
+   "visitDescription": "string", 
+   "visitDate": "string"
+}
+```
+
+#### Delete an existing Visit
+*Can only be accessed by School Admins. The Visit has to belong to the currently logged in School Admin's school*
+
+```DELETE: /visits/delete/{visitId}```
+
+
+
+
+
+
+
+
+
 
 
 

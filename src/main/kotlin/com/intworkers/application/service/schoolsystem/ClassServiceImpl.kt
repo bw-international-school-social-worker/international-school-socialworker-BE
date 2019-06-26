@@ -36,6 +36,8 @@ class ClassServiceImpl : ClassService {
     @Modifying
     override fun save(classToSave: Course): Course {
         val newClass = Course()
+        if (classToSave.className == null)
+            throw Exception()
         newClass.className = classToSave.className
         newClass.school = classToSave.school
         return classRepository.save(newClass)
@@ -70,7 +72,7 @@ class ClassServiceImpl : ClassService {
     @Transactional
     override fun removeFromSchool(classId: Long) {
         if (classRepository.findById(classId).isPresent)
-        classRepository.removeFromSchool(classId)
+            classRepository.removeFromSchool(classId)
         else throw ResourceNotFoundException("Couldn't find class or School")
     }
 }

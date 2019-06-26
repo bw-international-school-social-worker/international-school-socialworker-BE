@@ -1,4 +1,4 @@
-package com.intworkers.application.controller
+package com.intworkers.application.controller.auth
 
 import com.intworkers.application.model.user.User
 import com.intworkers.application.service.user.UserService
@@ -74,5 +74,12 @@ class UserController {
     fun deleteUserById(request: HttpServletRequest, @PathVariable id: Long): ResponseEntity<*> {
         userService.delete(id)
         return ResponseEntity<Any>(HttpStatus.OK)
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @DeleteMapping(value = ["/cleartables"])
+    fun deleteAll(): ResponseEntity<Any> {
+        userService.clearAllTables()
+        return ResponseEntity(HttpStatus.OK)
     }
 }

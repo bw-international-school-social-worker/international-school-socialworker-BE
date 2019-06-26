@@ -10,7 +10,7 @@ class Organization (
         @Column
         var organizationName: String? = null,
 
-        @Column
+        @Column(columnDefinition = "TEXT")
         var organizationMission: String? = null,
 
         @OneToMany(mappedBy = "organization", cascade = [CascadeType.ALL],

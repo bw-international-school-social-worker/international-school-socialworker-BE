@@ -15,10 +15,10 @@ class Student(
         @Column
         var lastName: String? = null,
 
-        @Column
+        @Column(columnDefinition = "TEXT")
         var photoUrl: String? = null,
 
-        @Column
+        @Column(columnDefinition = "TEXT")
         var backgroundStory: String? = null,
 
         @Column
@@ -36,10 +36,10 @@ class Student(
         @Column
         var hasBirthCertificate: Boolean? = null,
 
-        @Column
+        @Column(columnDefinition = "TEXT")
         var specialNeeds: String? = null,
 
-        @Column
+        @Column(columnDefinition = "TEXT")
         var contactInfo: String? = null,
 
         @ManyToOne
