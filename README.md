@@ -421,7 +421,7 @@ Body:
 #### Delete an existing Visit
 *Can only be accessed by School Admins. The Visit has to belong to the currently logged in School Admin's school*
 
-```DELETE: /visits/delete/{visitId}
+```DELETE: /visits/delete/{visitId}```
 
 
 
