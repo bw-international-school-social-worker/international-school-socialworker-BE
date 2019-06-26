@@ -7,7 +7,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "classes")
 class Course(
-        @Column
+        @Column(nullable = false)
         var className: String? = null,
 
         @ManyToOne

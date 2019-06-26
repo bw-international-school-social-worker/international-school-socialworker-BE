@@ -1,4 +1,4 @@
-package com.intworkers.application.controller
+package com.intworkers.application.controller.schoolsystem
 
 import com.intworkers.application.exception.ResourceNotFoundException
 import com.intworkers.application.model.schoolsystem.Student

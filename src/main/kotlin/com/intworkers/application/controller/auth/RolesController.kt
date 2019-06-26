@@ -1,4 +1,4 @@
-package com.intworkers.application.controller
+package com.intworkers.application.controller.auth
 
 import com.intworkers.application.model.user.Role
 import com.intworkers.application.service.user.RoleService
