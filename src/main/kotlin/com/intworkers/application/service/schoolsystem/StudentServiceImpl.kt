@@ -56,6 +56,9 @@ class StudentServiceImpl: StudentService {
         newStudent.photoUrl = student.photoUrl
         newStudent.insuranceExpiration = student.insuranceExpiration
         newStudent.school = student.school
+        newStudent.grade = student.grade
+        newStudent.studentClass = student.studentClass
+        newStudent.worker = student.worker
         return studentRepository.save(newStudent)
     }
 
@@ -75,6 +78,9 @@ class StudentServiceImpl: StudentService {
         if (student.status != null) updateStudent.status = student.status
         if (student.photoUrl != null) updateStudent.photoUrl = student.photoUrl
         if (student.insuranceExpiration != null) updateStudent.insuranceExpiration = student.insuranceExpiration
+        if (student.grade != null) updateStudent.grade = student.grade
+        if (student.studentClass != null) updateStudent.studentClass = student.studentClass
+        if (student.worker != null) updateStudent.worker = student.worker
         return studentRepository.save(updateStudent)
     }
 

@@ -2,6 +2,7 @@ package com.intworkers.application.service.user
 
 import com.intworkers.application.model.user.User
 import com.intworkers.application.model.user.UserRoles
+import com.intworkers.application.repository.schoolsystem.*
 import com.intworkers.application.repository.user.RoleRepository
 import com.intworkers.application.repository.user.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,6 +26,29 @@ class UserServiceImpl : UserDetailsService, UserService {
 
     @Autowired
     lateinit var rolerepos: RoleRepository
+
+    @Autowired
+    lateinit var classRepo: ClassRepository
+
+    @Autowired
+    lateinit var gradeRepo: GradeRepository
+
+    @Autowired
+    lateinit var schoolAdminRepo: SchoolAdminRepository
+
+    @Autowired
+    lateinit var schoolRepo: SchoolRepository
+
+    @Autowired
+    lateinit var socialWorkerRepo: SocialWorkerRepository
+
+    @Autowired
+    lateinit var studentRepo: StudentRepository
+
+    @Autowired
+    lateinit var visitRepo: VisitRepository
+
+
 
     @Transactional
     @Throws(UsernameNotFoundException::class)
@@ -104,5 +128,17 @@ class UserServiceImpl : UserDetailsService, UserService {
 
     override fun findByUsername(username: String): User {
         return userrepos.findByUsername(username)
+    }
+
+    override fun clearAllTables() {
+        userrepos.deleteAll()
+        rolerepos.deleteAll()
+        classRepo.deleteAll()
+        gradeRepo.deleteAll()
+        schoolAdminRepo.deleteAll()
+        schoolRepo.deleteAll()
+        socialWorkerRepo.deleteAll()
+        studentRepo.deleteAll()
+        visitRepo.deleteAll()
     }
 }

@@ -75,4 +75,11 @@ class UserController {
         userService.delete(id)
         return ResponseEntity<Any>(HttpStatus.OK)
     }
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @DeleteMapping(value = ["/cleartables"])
+    fun deleteAll(): ResponseEntity<Any> {
+        userService.clearAllTables()
+        return ResponseEntity(HttpStatus.OK)
+    }
 }

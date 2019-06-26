@@ -31,7 +31,7 @@ class SchoolAdmin(
         @Column(nullable = true)
         var email: String? = null,
 
-        @Column(nullable = true)
+        @Column(nullable = true, columnDefinition = "TEXT")
         var photoUrl: String? = null,
 
         @OneToOne(mappedBy = "schoolAdmin",

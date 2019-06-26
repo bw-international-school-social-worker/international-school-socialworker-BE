@@ -15,4 +15,6 @@ interface UserService {
     fun update(user: User, id: Long): User
 
     fun findByUsername(username: String): User
+
+    fun clearAllTables()
 }
