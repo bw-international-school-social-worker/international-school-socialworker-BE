@@ -26,10 +26,20 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.junit.Assert.*
+import org.mockito.MockitoAnnotations
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
-import org.springframework.security.core.Authentication
 import org.springframework.security.test.context.support.WithMockUser
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.test.context.support.WithUserDetails
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication
+import org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
+import org.springframework.web.context.WebApplicationContext
+
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
+import org.springframework.security.web.FilterChainProxy
+import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 
 @RunWith(SpringRunner::class)
@@ -37,8 +47,10 @@ import org.springframework.security.test.context.support.WithMockUser
 @EnableSpringDataWebSupport
 class SocialWorkerControllerTest {
 
-    @Autowired
     private lateinit var mockMvc: MockMvc
+
+    @Autowired
+    private lateinit var webApplicationContext: WebApplicationContext
 
     @MockBean
     private lateinit var socialWorkerService: SocialWorkerService
@@ -54,9 +66,18 @@ class SocialWorkerControllerTest {
 
     private lateinit var socialWorkerList: MutableList<SocialWorker>
 
+    private lateinit var user1: User
+
+    private lateinit var socialWorker1: SocialWorker
+
     @Before
     @Throws(Exception::class)
     fun setUp() {
+        MockitoAnnotations.initMocks(this)
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(webApplicationContext)
+                .apply<DefaultMockMvcBuilder>(springSecurity())
+                .build()
         socialWorkerList = mutableListOf()
 
         val r1 = Role("schooladmin")
@@ -65,8 +86,9 @@ class SocialWorkerControllerTest {
 
         var workers = mutableListOf<UserRoles>()
         workers.add(UserRoles(User(), r2))
-        var user1 = User("socialworker", "password", workers)
-        val socialWorker1 = SocialWorker()
+        user1 = User("socialworker", "password", workers)
+        user1.userId = 1
+        socialWorker1 = SocialWorker()
         socialWorker1.firstName = "Vivek"
         socialWorker1.lastName = "Vishwanath"
         socialWorker1.email = "socialWorker1@gmail.com"
@@ -100,7 +122,8 @@ class SocialWorkerControllerTest {
 
     @After
     @Throws(Exception::class)
-    fun tearDown() {}
+    fun tearDown() {
+    }
 
     @Test
     @Throws(Exception::class)
@@ -134,11 +157,14 @@ class SocialWorkerControllerTest {
 
     @Test
     @WithMockUser(username = "socialworker", password = "password", roles = ["socialworker"])
+    @WithUserDetails("socialWorker")
     @Throws(Exception::class)
     fun currentWorkerInfo() {
+        val auth = SecurityContextHolder.getContext().authentication
         val apiUrl = "/socialworkers/myinfo"
-        Mockito.`when`(socialWorkerService.findById(0)).thenReturn(socialWorkerList[0])
-        val rb = MockMvcRequestBuilders.get(apiUrl).accept(MediaType.APPLICATION_JSON)
+        Mockito.`when`(userService.findByUsername("socialworker")).thenReturn(user1)
+        Mockito.`when`(socialWorkerService.findById(user1.userId)).thenReturn(socialWorkerList[0])
+        val rb = MockMvcRequestBuilders.get(apiUrl).with(authentication(auth)).accept(MediaType.APPLICATION_JSON)
         val r = mockMvc.perform(rb).andReturn()
         val tr = r.response.contentAsString
 
