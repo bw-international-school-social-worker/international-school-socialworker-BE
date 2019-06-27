@@ -2,6 +2,7 @@ package com.intworkers.application.model.schoolsystem
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.auditing.Auditable
 import com.intworkers.application.model.user.SocialWorker
 import com.intworkers.application.model.user.User
 import javax.persistence.*
@@ -73,7 +74,7 @@ class Student(
 
         @Column(name = "workerId", insertable = false, updatable = false)
         var workerId: Long? = 0
-) {
+): Auditable() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var studentId: Long = 0

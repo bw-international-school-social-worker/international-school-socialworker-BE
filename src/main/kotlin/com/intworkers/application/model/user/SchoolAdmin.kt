@@ -2,6 +2,7 @@ package com.intworkers.application.model.user
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.auditing.Auditable
 import com.intworkers.application.model.schoolsystem.School
 import java.io.Serializable
 import java.util.*
@@ -38,7 +39,7 @@ class SchoolAdmin(
                 orphanRemoval = true)
         @JsonIgnoreProperties("schoolAdmin")
         var school: School? = null
-): Serializable /* {
+): Serializable, Auditable() /* {
         override fun equals(o: Any?): Boolean {
                 if (this === o) {
                         return true

@@ -1,13 +1,14 @@
 package com.intworkers.application.model.user
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.auditing.Auditable
 import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
 @Entity
 @Table(name = "userroles")
-class UserRoles : Serializable {
+class UserRoles : Serializable, Auditable {
 
     @Id
     @ManyToOne

@@ -2,6 +2,7 @@ package com.intworkers.application.model.user
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.auditing.Auditable
 import com.intworkers.application.model.schoolsystem.Organization
 import com.intworkers.application.model.schoolsystem.School
 import com.intworkers.application.model.schoolsystem.Student
@@ -62,7 +63,7 @@ class SocialWorker(
 
         @Column(name = "organizationId", insertable = false, updatable = false)
         var organizationId: Long? = null
-): Serializable /* {
+): Serializable, Auditable() /* {
         override fun equals(o: Any?): Boolean {
                 if (this === o) {
                         return true

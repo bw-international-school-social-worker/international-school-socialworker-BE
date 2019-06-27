@@ -1,12 +1,13 @@
 package com.intworkers.application.model.user
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.auditing.Auditable
 import javax.persistence.*
 
 
 @Entity
 @Table(name = "roles")
-class Role {
+class Role: Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

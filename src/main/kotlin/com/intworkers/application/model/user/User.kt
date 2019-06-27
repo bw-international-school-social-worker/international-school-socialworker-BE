@@ -3,6 +3,7 @@ package com.intworkers.application.model.user
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.intworkers.application.model.auditing.Auditable
 import com.intworkers.application.model.schoolsystem.School
 import com.intworkers.application.model.schoolsystem.Student
 import com.intworkers.application.model.schoolsystem.Visit
@@ -13,7 +14,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "users")
-class User {
+class User: Auditable {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
