@@ -423,6 +423,15 @@ Body:
 
 ```DELETE: /visits/delete/{visitId}```
 
+### Image Upload Endpoint
+*Can be accessed by all accounts* 
+
+```POST: /image/upload```
+
+```BODY: Send the image file as form-data with key "image"```
+
+The response will contain the url where the image can be accessed. Store the url in the "photoUrl" field of appropriate entity and update that entity at the respective endpoint
+
 
 
 
