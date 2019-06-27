@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.intworkers.application.model.auditing.Auditable
 import com.intworkers.application.model.schoolsystem.School
+import io.swagger.annotations.ApiModel
 import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
+@ApiModel(value = "school_admins")
 @Entity
 @Table(name = "school_admins")
 class SchoolAdmin(

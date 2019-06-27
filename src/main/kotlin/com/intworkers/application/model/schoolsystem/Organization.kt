@@ -3,8 +3,10 @@ package com.intworkers.application.model.schoolsystem
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.intworkers.application.model.auditing.Auditable
 import com.intworkers.application.model.user.SocialWorker
+import io.swagger.annotations.ApiModel
 import javax.persistence.*
 
+@ApiModel(value = "organizations")
 @Entity
 @Table(name = "organizations")
 class Organization (

@@ -7,11 +7,13 @@ import com.intworkers.application.model.auditing.Auditable
 import com.intworkers.application.model.schoolsystem.School
 import com.intworkers.application.model.schoolsystem.Student
 import com.intworkers.application.model.schoolsystem.Visit
+import io.swagger.annotations.ApiModel
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.ArrayList
 import javax.persistence.*
 
+@ApiModel(value = "users")
 @Entity
 @Table(name = "users")
 class User: Auditable {

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.intworkers.application.model.auditing.Auditable
 import com.intworkers.application.model.user.SocialWorker
 import com.intworkers.application.model.user.User
+import io.swagger.annotations.ApiModel
 import javax.persistence.*
 
+@ApiModel(value = "visits")
 @Entity
 @Table(name = "visits")
 class Visit (

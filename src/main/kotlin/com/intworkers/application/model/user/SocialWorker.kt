@@ -7,10 +7,12 @@ import com.intworkers.application.model.schoolsystem.Organization
 import com.intworkers.application.model.schoolsystem.School
 import com.intworkers.application.model.schoolsystem.Student
 import com.intworkers.application.model.schoolsystem.Visit
+import io.swagger.annotations.ApiModel
 import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
+@ApiModel(value = "social_workers")
 @Entity
 @Table(name = "social_workers")
 class SocialWorker(
