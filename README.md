@@ -144,6 +144,11 @@ Body:
 
 ```GET: /schools/all```
 
+#### Get current School Admin's school
+*Can only be accessible to School Admins and will automatically return currently logged in School Admin's school*
+
+```GET: /schools/myschool```
+
 #### Create a School 
 *Can only be accessible to School Admins and a school admin can only own one school*
 
@@ -422,6 +427,15 @@ Body:
 *Can only be accessed by School Admins. The Visit has to belong to the currently logged in School Admin's school*
 
 ```DELETE: /visits/delete/{visitId}```
+
+### Image Upload Endpoint
+*Can be accessed by all accounts* 
+
+```POST: /image/upload```
+
+```BODY: Send the image file as form-data with key "image"```
+
+The response will contain the url where the image can be accessed. Store the url in the "photoUrl" field of appropriate entity and update that entity at the respective endpoint
 
 
 
