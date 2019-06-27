@@ -7,6 +7,10 @@ import com.intworkers.application.service.schoolsystem.SchoolAdminService
 import com.intworkers.application.service.schoolsystem.SchoolService
 import com.intworkers.application.service.schoolsystem.SocialWorkerService
 import com.intworkers.application.service.user.UserService
+import io.swagger.annotations.ApiImplicitParam
+import io.swagger.annotations.ApiImplicitParams
+import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.ApiParam
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -33,6 +37,16 @@ class SocialWorkerController {
     @Autowired
     private lateinit var schoolAdminService: SchoolAdminService
 
+    @ApiOperation(value = "Find all Social Workers", response = SocialWorker::class, responseContainer = "List")
+    @ApiImplicitParams(
+            ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+                    value = "Results page you want to retrieve (0..N)"),
+            ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+                    value = "Number of records per page."),
+            ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                    value = "Sorting criteria in the format: property(,asc|desc). " +
+                            "Default sort order is ascending. " +
+                            "Multiple sort criteria are supported."))
     @PreAuthorize("hasAnyAuthority('ROLE_SCHOOLADMIN', 'ROLE_ADMIN')")
     @GetMapping(value = ["/all"], produces = ["application/json"])
     fun findAll(pageable: Pageable): ResponseEntity<*> {
@@ -40,12 +54,15 @@ class SocialWorkerController {
         return ResponseEntity(workers, HttpStatus.OK)
     }
 
+    @ApiOperation(value = "Find a Social Worker by Id", response = SocialWorker::class)
     @PreAuthorize("hasAnyAuthority('ROLE_SCHOOLADMIN', 'ROLE_ADMIN')")
     @GetMapping(value = ["/worker/{id}"], produces = ["application/json"])
-    fun findById(@PathVariable id: Long): ResponseEntity<*> {
+    fun findById(@ApiParam(value = "Social Worker Id", required = true, example = "1")
+                 @PathVariable id: Long): ResponseEntity<*> {
         return ResponseEntity(socialWorkerService.findById(id), HttpStatus.OK)
     }
 
+    @ApiOperation(value = "Find current Social Worker's info", response = SocialWorker::class)
     @PreAuthorize("hasAuthority('ROLE_SOCIALWORKER')")
     @GetMapping(value = ["/myinfo"], produces = ["application/json"])
     fun currentWorkerInfo(authentication: Authentication): ResponseEntity<*> {
@@ -54,16 +71,19 @@ class SocialWorkerController {
         return ResponseEntity(socialWorkerService.findById(user.userId), HttpStatus.OK)
     }
 
+    @ApiOperation(value = "Update current Social Worker's info", response = SocialWorker::class)
     @PreAuthorize("hasAuthority('ROLE_SOCIALWORKER')")
     @PutMapping(value = ["/myinfo"], consumes = ["application/json"],
             produces = ["application/json"])
     fun updateMyInfo(authentication: Authentication,
+                     @ApiParam(value = "Social Worker with info to update", required = true)
                      @Valid @RequestBody workerToUpdate: SocialWorker): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
         return ResponseEntity(socialWorkerService.update(workerToUpdate, user.userId), HttpStatus.OK)
     }
 
+    @ApiOperation(value = "Delete current Social Worker from system", response = Void::class)
     @PreAuthorize("hasAuthority('ROLE_SOCIALWORKER')")
     @DeleteMapping(value = ["/myinfo"])
     fun deleteMyInfo(authentication: Authentication): ResponseEntity<Any> {
@@ -73,11 +93,13 @@ class SocialWorkerController {
         return ResponseEntity(HttpStatus.OK)
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_SOCIALWORKER', 'ROLE_ADMIN')")
+    @ApiOperation(value = "Assign Social Worker to current School Admin's School", response = Void::class)
+    @PreAuthorize("hasAnyAuthority('ROLE_SCHOOLADMIN', 'ROLE_ADMIN')")
     @PostMapping(value = ["/assigntoschool/{workerId}"])
-    fun assignToSchool(@PathVariable workerId: Long,
+    fun assignToSchool(@ApiParam(value = "Social Worker Id", required = true, example = "1")
+                       @PathVariable workerId: Long,
                        authentication: Authentication
-                       ): ResponseEntity<Any> {
+    ): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
         val schoolAdmin = schoolAdminService.findById(user.userId)
@@ -86,9 +108,11 @@ class SocialWorkerController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_SOCIALWORKER', 'ROLE_ADMIN')")
+    @ApiOperation(value = "Remove a Social Worker from current School Admin's school", response = Void::class)
+    @PreAuthorize("hasAnyAuthority('ROLE_SCHOOLADMIN', 'ROLE_ADMIN')")
     @DeleteMapping(value = ["/removefromschool/{workerId}"])
-    fun removeFromSchool(@PathVariable workerId: Long,
+    fun removeFromSchool(@ApiParam(value = "Social Worker Id", required = true, example = "1")
+                         @PathVariable workerId: Long,
                          authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)

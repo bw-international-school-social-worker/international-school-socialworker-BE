@@ -8,6 +8,10 @@ import com.intworkers.application.service.schoolsystem.SchoolAdminService
 import com.intworkers.application.service.schoolsystem.SocialWorkerService
 import com.intworkers.application.service.user.RoleService
 import com.intworkers.application.service.user.UserService
+import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.ApiParam
+import io.swagger.annotations.ApiResponse
+import io.swagger.annotations.ApiResponses
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -39,11 +43,17 @@ class OpenController {
     @Autowired
     private lateinit var schoolAdminService: SchoolAdminService
 
+    @ApiOperation(value = "Create a new user with role socialworker or schooladmin")
+    @ApiResponses(value = [
+    ApiResponse(code = 201, message = "New School Admin successfully created", response = SchoolAdmin::class),
+    ApiResponse(code = 201, message = "New Social Worker successfully created", response = SocialWorker::class),
+    ApiResponse(code = 400, message = "Error creating new user", response = Void::class)])
     @PostMapping(value = ["/createnewuser/{role}"], consumes = ["application/json"], produces = ["application/json"])
     @Throws(URISyntaxException::class)
     fun addNewUser(request: HttpServletRequest, @Valid
     @RequestBody
-    newUser: User, @PathVariable role: String): ResponseEntity<Any> {
+    newUser: User, @ApiParam(value = "User role", required = true, example = "socialworker")
+                   @PathVariable role: String): ResponseEntity<Any> {
         if (role != "socialworker" && role != "schooladmin") throw Exception()
         val newRoles = ArrayList<UserRoles>()
         newRoles.add(UserRoles(newUser, roleService.findByName(role)))

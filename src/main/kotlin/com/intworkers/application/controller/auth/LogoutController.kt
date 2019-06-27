@@ -1,5 +1,6 @@
 package com.intworkers.application.controller.auth
 
+import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
@@ -18,6 +19,7 @@ class LogoutController {
     @Autowired
     private lateinit var tokenStore: TokenStore
 
+    @ApiOperation(value = "Logout current User", response = Void::class)
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_SCHOOLADMIN', 'ROLE_SOCIALWORKER')")
     @RequestMapping(value = ["/oauth/revoke-token"], method = [RequestMethod.GET])
     @ResponseStatus(HttpStatus.OK)
