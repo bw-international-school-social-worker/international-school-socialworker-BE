@@ -47,6 +47,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 @EnableSpringDataWebSupport
 class SocialWorkerControllerTest {
 
+    @Autowired
     private lateinit var mockMvc: MockMvc
 
     @Autowired
@@ -74,10 +75,6 @@ class SocialWorkerControllerTest {
     @Throws(Exception::class)
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        mockMvc = MockMvcBuilders
-                .webAppContextSetup(webApplicationContext)
-                .apply<DefaultMockMvcBuilder>(springSecurity())
-                .build()
         socialWorkerList = mutableListOf()
 
         val r1 = Role("schooladmin")

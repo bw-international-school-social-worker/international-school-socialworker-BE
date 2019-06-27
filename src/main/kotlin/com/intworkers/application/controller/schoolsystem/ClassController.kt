@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
@@ -27,11 +28,13 @@ class ClassController {
     @Autowired
     private lateinit var schoolAdminService: SchoolAdminService
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/all"], produces = ["application/json"])
     fun findAll(pageable: Pageable): ResponseEntity<*> {
         return ResponseEntity(classService.findAll(pageable), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @GetMapping(value = ["/myclasses"], produces = ["application/json"])
     fun findMyClasses(pageable: Pageable, authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
@@ -46,6 +49,7 @@ class ClassController {
         return ResponseEntity(allClasses, HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PostMapping(value = ["/new"], consumes = ["application/json"], produces = ["application/json "])
     fun createNewClass(@Valid @RequestBody course: Course, authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
@@ -56,6 +60,7 @@ class ClassController {
         return ResponseEntity(classService.save(course), HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PutMapping(value = ["/update/{id}"], consumes = ["application/json"], produces = ["application/json"])
     fun update(@Valid @RequestBody course: Course,
                authentication: Authentication, @PathVariable id: Long): ResponseEntity<Any> {
@@ -68,6 +73,7 @@ class ClassController {
         } else ResponseEntity(HttpStatus.CONFLICT)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @DeleteMapping(value = ["/delete/{id}"])
     fun delete(@PathVariable id: Long, authentication: Authentication): ResponseEntity<Any> {
         val savedClass = classService.findById(id)

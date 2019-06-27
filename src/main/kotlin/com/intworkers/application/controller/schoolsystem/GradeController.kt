@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
@@ -28,11 +29,13 @@ class GradeController {
     @Autowired
     private lateinit var schoolAdminService: SchoolAdminService
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/all"], produces = ["application/json"])
     fun findAll(pageable: Pageable): ResponseEntity<*> {
         return ResponseEntity(gradeService.findAll(pageable), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @GetMapping(value = ["/mygrades"], produces = ["application/json"])
     fun findMyGrades(pageable: Pageable, authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
@@ -47,6 +50,7 @@ class GradeController {
         return ResponseEntity(allGrades, HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PostMapping(value = ["/new"], consumes = ["application/json"], produces = ["application/json "])
     fun createNewGrade(@Valid @RequestBody grade: Grade, authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
@@ -58,6 +62,7 @@ class GradeController {
         return ResponseEntity(gradeService.findById(savedGrade.gradeId), HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PutMapping(value = ["/update/{id}"], consumes = ["application/json"], produces = ["application/json"])
     fun update(@Valid @RequestBody grade: Grade,
                authentication: Authentication, @PathVariable id: Long): ResponseEntity<Any> {
@@ -70,6 +75,7 @@ class GradeController {
         } else ResponseEntity(HttpStatus.CONFLICT)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @DeleteMapping(value = ["/delete/{id}"])
     fun delete(@PathVariable id: Long, authentication: Authentication): ResponseEntity<Any> {
         val savedGrade = gradeService.findById(id)

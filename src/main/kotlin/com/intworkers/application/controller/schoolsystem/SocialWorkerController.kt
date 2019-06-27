@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
@@ -32,17 +33,20 @@ class SocialWorkerController {
     @Autowired
     private lateinit var schoolAdminService: SchoolAdminService
 
+    @PreAuthorize("hasAnyAuthority('ROLE_SCHOOLADMIN', 'ROLE_ADMIN')")
     @GetMapping(value = ["/all"], produces = ["application/json"])
     fun findAll(pageable: Pageable): ResponseEntity<*> {
         val workers = socialWorkerService.findAll(pageable)
         return ResponseEntity(workers, HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_SCHOOLADMIN', 'ROLE_ADMIN')")
     @GetMapping(value = ["/worker/{id}"], produces = ["application/json"])
     fun findById(@PathVariable id: Long): ResponseEntity<*> {
         return ResponseEntity(socialWorkerService.findById(id), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SOCIALWORKER')")
     @GetMapping(value = ["/myinfo"], produces = ["application/json"])
     fun currentWorkerInfo(authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
@@ -50,6 +54,7 @@ class SocialWorkerController {
         return ResponseEntity(socialWorkerService.findById(user.userId), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SOCIALWORKER')")
     @PutMapping(value = ["/myinfo"], consumes = ["application/json"],
             produces = ["application/json"])
     fun updateMyInfo(authentication: Authentication,
@@ -59,6 +64,7 @@ class SocialWorkerController {
         return ResponseEntity(socialWorkerService.update(workerToUpdate, user.userId), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SOCIALWORKER')")
     @DeleteMapping(value = ["/myinfo"])
     fun deleteMyInfo(authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
@@ -67,6 +73,7 @@ class SocialWorkerController {
         return ResponseEntity(HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_SOCIALWORKER', 'ROLE_ADMIN')")
     @PostMapping(value = ["/assigntoschool/{workerId}"])
     fun assignToSchool(@PathVariable workerId: Long,
                        authentication: Authentication
@@ -79,6 +86,7 @@ class SocialWorkerController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_SOCIALWORKER', 'ROLE_ADMIN')")
     @DeleteMapping(value = ["/removefromschool/{workerId}"])
     fun removeFromSchool(@PathVariable workerId: Long,
                          authentication: Authentication): ResponseEntity<Any> {

@@ -9,6 +9,7 @@ import com.intworkers.application.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
@@ -35,11 +36,13 @@ class VisitController {
         return ResponseEntity(visitService.findById(id), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/all"], produces = ["application/json"])
     fun findAll(): ResponseEntity<*> {
         return ResponseEntity(visitService.findAll(), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SOCIALWORKER')")
     @GetMapping(value = ["socialworker/all"], produces = ["application/json"])
     fun findAllWorkerVisits(authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
@@ -53,6 +56,7 @@ class VisitController {
         return ResponseEntity(myVisits, HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @GetMapping(value = ["schoolAdmin/all"], produces = ["application/json"])
     fun findAllAdminVisits(authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
@@ -66,6 +70,7 @@ class VisitController {
         return ResponseEntity(myVisits, HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PostMapping(value = ["/new/{workerId}"],
             consumes = ["application/json"], produces = ["application/json"])
     fun visitSchool(@Valid @RequestBody visit: Visit, @PathVariable workerId: Long,
@@ -79,6 +84,7 @@ class VisitController {
         return ResponseEntity(visitService.findById(savedVisit.visitId), HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PutMapping(value = ["/update/{visitId}"], consumes = ["application/json"],
             produces = ["application/json"])
     fun updateVisit(@Valid @RequestBody visit: Visit, @PathVariable visitId: Long,
@@ -92,6 +98,7 @@ class VisitController {
         return ResponseEntity(visitService.update(visit, visitId), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @DeleteMapping(value = ["/delete/{visitId}"])
     fun deleteVisit(@PathVariable visitId: Long,
                     authentication: Authentication): ResponseEntity<Any> {

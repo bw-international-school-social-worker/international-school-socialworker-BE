@@ -2,6 +2,7 @@ package com.intworkers.application.controller.auth
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Controller
@@ -17,6 +18,7 @@ class LogoutController {
     @Autowired
     private lateinit var tokenStore: TokenStore
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_SCHOOLADMIN', 'ROLE_SOCIALWORKER')")
     @RequestMapping(value = ["/oauth/revoke-token"], method = [RequestMethod.GET])
     @ResponseStatus(HttpStatus.OK)
     fun logout(request: HttpServletRequest) {

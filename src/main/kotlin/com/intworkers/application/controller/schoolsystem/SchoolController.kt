@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
@@ -26,16 +27,19 @@ class SchoolController {
     @Autowired
     private lateinit var schoolAdminService: SchoolAdminService
 
+    @PreAuthorize("hasAnyAuthority('ROLE_SOCIALWORKER', 'ROLE_ADMIN')")
     @GetMapping(value = ["/school/{id}"], produces = ["application/json"])
     fun findById(@PathVariable id: Long): ResponseEntity<*> {
         return ResponseEntity(schoolService.findById(id), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_SOCIALWORKER', 'ROLE_ADMIN')")
     @GetMapping(value = ["/all"], produces = ["application/json"])
     fun findAll(pageable: Pageable): ResponseEntity<*> {
         return ResponseEntity(schoolService.findAll(pageable), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @GetMapping(value = ["/myschool"], produces = ["application/json"])
     fun getMySchool(authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
@@ -48,6 +52,7 @@ class SchoolController {
         }
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PostMapping(value = ["/myschool"], consumes = ["application/json"], produces = ["application/json"])
     fun create(@Valid @RequestBody school: School, authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
@@ -58,6 +63,7 @@ class SchoolController {
         return ResponseEntity(schoolService.findById(savedSchool.schoolId), HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PutMapping(value = ["/myschool"], consumes = ["application/json"], produces = ["application/json"])
     fun update(@Valid @RequestBody school: School,
                authentication: Authentication): ResponseEntity<Any> {
@@ -69,6 +75,7 @@ class SchoolController {
         else ResponseEntity(HttpStatus.CONFLICT)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @DeleteMapping(value = ["/myschool"])
     fun delete(authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username

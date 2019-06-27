@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
@@ -25,17 +26,20 @@ class SchoolAdminController {
     @Autowired
     private lateinit var userService: UserService
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/all"], produces = ["application/json"])
     fun findAll(pageable: Pageable): ResponseEntity<*> {
         val admins = schoolAdminService.findAll(pageable)
         return ResponseEntity(admins, HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/admin/{id}"], produces = ["application/json"])
     fun findById(@PathVariable id: Long): ResponseEntity<*> {
         return ResponseEntity(schoolAdminService.findById(id), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @GetMapping(value = ["/myinfo"], produces = ["application/json"])
     fun currentAdminInfo(authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
@@ -43,6 +47,7 @@ class SchoolAdminController {
         return ResponseEntity(schoolAdminService.findById(user.userId), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PutMapping(value = ["myinfo"], consumes = ["application/json"],
             produces = ["application/json"])
     fun updateMyInfo(authentication: Authentication,
@@ -52,6 +57,7 @@ class SchoolAdminController {
         return ResponseEntity(schoolAdminService.update(adminToUpdate, user.userId), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @DeleteMapping(value = ["myinfo"])
     fun deleteMyInfo(authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username

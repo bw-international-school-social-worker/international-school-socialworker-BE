@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
@@ -48,6 +49,7 @@ class StudentController {
         return ResponseEntity(studentService.findAll(), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SOCIALWORKER')")
     @GetMapping(value = ["/socialworker/all"], produces = ["application/json"])
     fun findAllWorkerStudents(pageable: Pageable,
                               authentication: Authentication): ResponseEntity<Any> {
@@ -57,6 +59,7 @@ class StudentController {
         return ResponseEntity(socialWorker.students, HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @GetMapping(value = ["/schooladmin/all"], produces = ["application/json"])
     fun findAllAdminStudents(authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
@@ -71,6 +74,7 @@ class StudentController {
         return ResponseEntity(adminStudents, HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PostMapping(value = ["/new"], consumes = ["application/json"], produces = ["application/json"])
     fun createNewStudent(@Valid @RequestBody student: Student,
                          authentication: Authentication): ResponseEntity<*> {
@@ -82,6 +86,7 @@ class StudentController {
         return ResponseEntity(studentService.save(student).studentId, HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PutMapping(value = ["/update/{id}"], consumes = ["application/json"], produces = ["application/json"])
     fun updateStudent(@Valid @RequestBody student: Student, @PathVariable id: Long,
                       authentication: Authentication): ResponseEntity<*> {
@@ -94,6 +99,7 @@ class StudentController {
         return ResponseEntity(studentService.update(student, id), HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @DeleteMapping(value = ["/delete/{id}"])
     fun deleteStudent(@PathVariable id: Long, authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
@@ -106,6 +112,7 @@ class StudentController {
         return ResponseEntity(HttpStatus.OK)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PostMapping(value = ["{studentId}/assigntoworker/{workerId}"])
     fun assignToWorker(@PathVariable studentId: Long,
                        @PathVariable workerId: Long,
@@ -121,6 +128,7 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PostMapping(value = ["{studentId}/assigntoclass/{classId}"])
     fun assignToClass(@PathVariable studentId: Long,
                       @PathVariable classId: Long,
@@ -136,6 +144,7 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PostMapping(value = ["{studentId}/assigntograde/{gradeId}"])
     fun assignToGrade(@PathVariable studentId: Long,
                       @PathVariable gradeId: Long,
@@ -151,6 +160,7 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @PostMapping(value = ["{studentId}/assigntoschool"])
     fun assignToSchool(@PathVariable studentId: Long,
                        authentication: Authentication): ResponseEntity<Any> {
@@ -167,6 +177,7 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @DeleteMapping(value = ["{studentId}/removefromworker"])
     fun removeFromWorker(@PathVariable studentId: Long,
                          authentication: Authentication): ResponseEntity<Any> {
@@ -181,6 +192,7 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @DeleteMapping(value = ["{studentId}/removefromclass"])
     fun removeFromClass(@PathVariable studentId: Long,
                         authentication: Authentication): ResponseEntity<Any> {
@@ -195,6 +207,7 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @DeleteMapping(value = ["{studentId}/removefromgrade"])
     fun removeFromGrade(@PathVariable studentId: Long,
                         authentication: Authentication): ResponseEntity<Any> {
@@ -209,6 +222,7 @@ class StudentController {
         return ResponseEntity(HttpStatus.CREATED)
     }
 
+    @PreAuthorize("hasAuthority('ROLE_SCHOOLADMIN')")
     @DeleteMapping(value = ["{studentId}/removefromschool"])
     fun removeFromSchool(@PathVariable studentId: Long,
                          authentication: Authentication): ResponseEntity<Any> {

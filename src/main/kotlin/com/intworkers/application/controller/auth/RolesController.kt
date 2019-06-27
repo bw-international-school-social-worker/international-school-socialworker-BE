@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
@@ -21,6 +22,7 @@ class RolesController {
     @Autowired
     private lateinit var roleService: RoleService
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/roles"], produces = ["application/json"])
     fun listRoles(request: HttpServletRequest): ResponseEntity<*> {
 
@@ -28,14 +30,14 @@ class RolesController {
         return ResponseEntity(allRoles, HttpStatus.OK)
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = ["/role/{roleId}"], produces = ["application/json"])
     fun getRole(request: HttpServletRequest, @PathVariable roleId: Long?): ResponseEntity<*> {
         val r = roleService.findRoleById(roleId!!)
         return ResponseEntity(r, HttpStatus.OK)
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping(value = ["/role"])
     @Throws(URISyntaxException::class)
     fun addNewRole(request: HttpServletRequest, @Valid @RequestBody newRole: Role): ResponseEntity<*> {
@@ -54,7 +56,7 @@ class RolesController {
         return ResponseEntity<Any>(null, responseHeaders, HttpStatus.CREATED)
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/role/{id}")
     fun deleteRoleById(request: HttpServletRequest, @PathVariable id: Long): ResponseEntity<*> {
         roleService.delete(id)
