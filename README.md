@@ -144,6 +144,11 @@ Body:
 
 ```GET: /schools/all```
 
+#### Get current School Admin's school
+*Can only be accessible to School Admins and will automatically return currently logged in School Admin's school*
+
+```GET: /schools/myschool```
+
 #### Create a School 
 *Can only be accessible to School Admins and a school admin can only own one school*
 
