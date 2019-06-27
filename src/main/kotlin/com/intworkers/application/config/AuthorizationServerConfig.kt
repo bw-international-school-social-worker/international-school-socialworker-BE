@@ -41,8 +41,8 @@ class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
     }
 
     companion object {
-        internal val CLIENT_ID = "intworkers"
-        internal val CLIENT_SECRET = "lambdaintworkers"
+        internal val CLIENT_ID = System.getenv("INT_SCHOOLS_CLIENT_ID")
+        internal val CLIENT_SECRET = System.getenv("INT_SCHOOLS_CLIENT_SECRET")
         internal val GRANT_TYPE_PASSWORD = "password"
         internal val AUTHORIZATION_CODE = "authorization_code"
         internal val REFRESH_TOKEN = "refresh_token"
