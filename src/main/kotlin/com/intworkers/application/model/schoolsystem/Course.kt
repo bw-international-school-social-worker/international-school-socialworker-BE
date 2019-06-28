@@ -2,8 +2,11 @@ package com.intworkers.application.model.schoolsystem
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.auditing.Auditable
+import io.swagger.annotations.ApiModel
 import javax.persistence.*
 
+@ApiModel(value = "classes")
 @Entity
 @Table(name = "classes")
 class Course(
@@ -22,7 +25,7 @@ class Course(
                 orphanRemoval = false)
         @JsonIgnoreProperties("class")
         var students: MutableList<Student> = mutableListOf()
-) {
+): Auditable() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var classId: Long = 0

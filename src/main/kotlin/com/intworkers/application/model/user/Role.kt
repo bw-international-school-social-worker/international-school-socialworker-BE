@@ -1,12 +1,14 @@
 package com.intworkers.application.model.user
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.auditing.Auditable
+import io.swagger.annotations.ApiModel
 import javax.persistence.*
 
-
+@ApiModel(value = "roles")
 @Entity
 @Table(name = "roles")
-class Role {
+class Role: Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

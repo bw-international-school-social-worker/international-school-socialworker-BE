@@ -2,14 +2,17 @@ package com.intworkers.application.model.user
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.intworkers.application.model.auditing.Auditable
 import com.intworkers.application.model.schoolsystem.Organization
 import com.intworkers.application.model.schoolsystem.School
 import com.intworkers.application.model.schoolsystem.Student
 import com.intworkers.application.model.schoolsystem.Visit
+import io.swagger.annotations.ApiModel
 import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
+@ApiModel(value = "social_workers")
 @Entity
 @Table(name = "social_workers")
 class SocialWorker(
@@ -62,7 +65,7 @@ class SocialWorker(
 
         @Column(name = "organizationId", insertable = false, updatable = false)
         var organizationId: Long? = null
-): Serializable /* {
+): Serializable, Auditable() /* {
         override fun equals(o: Any?): Boolean {
                 if (this === o) {
                         return true

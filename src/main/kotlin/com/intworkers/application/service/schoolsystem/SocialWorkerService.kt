@@ -17,4 +17,6 @@ interface SocialWorkerService {
     fun assignWorkerToSchool(workerId: Long, schoolId: Long)
 
     fun removeWorkerFromSchool(workerId: Long, schoolId: Long)
+
+    fun leaveOrg(id: Long)
 }

@@ -1,3 +1,5 @@
+package com.intworkers.application.handler
+
 import com.intworkers.application.exception.ResourceNotFoundException
 import com.intworkers.application.handler.ErrorDetail
 import org.springframework.beans.TypeMismatchException

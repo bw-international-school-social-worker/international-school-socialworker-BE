@@ -58,6 +58,7 @@ class SocialWorkerServiceImpl : SocialWorkerService {
         if (socialWorker.lastName != null) updatedWorker.lastName = socialWorker.lastName
         if (socialWorker.phone != null) updatedWorker.phone = socialWorker.phone
         if (socialWorker.photoUrl != null) updatedWorker.photoUrl = socialWorker.photoUrl
+        if (socialWorker.organization != null) updatedWorker.organization = socialWorker.organization
         return socialWorkerRepository.save(updatedWorker)
     }
 
@@ -80,5 +81,12 @@ class SocialWorkerServiceImpl : SocialWorkerService {
     @Transactional
     override fun removeWorkerFromSchool(workerId: Long, schoolId: Long) {
         socialWorkerRepository.removeWorkerFromSchool(workerId, schoolId)
+    }
+
+    override fun leaveOrg(id: Long) {
+        val worker = socialWorkerRepository.findById(id)
+                .orElseThrow { ResourceNotFoundException("Couldn't find worker with id $id") }
+        worker.organization = null
+        socialWorkerRepository.save(worker)
     }
 }
