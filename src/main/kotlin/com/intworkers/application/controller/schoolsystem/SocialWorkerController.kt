@@ -3,6 +3,7 @@ package com.intworkers.application.controller.schoolsystem
 import com.intworkers.application.exception.ResourceNotFoundException
 import com.intworkers.application.model.user.SchoolAdmin
 import com.intworkers.application.model.user.SocialWorker
+import com.intworkers.application.service.OrgService
 import com.intworkers.application.service.schoolsystem.SchoolAdminService
 import com.intworkers.application.service.schoolsystem.SchoolService
 import com.intworkers.application.service.schoolsystem.SocialWorkerService
@@ -36,6 +37,9 @@ class SocialWorkerController {
 
     @Autowired
     private lateinit var schoolAdminService: SchoolAdminService
+
+    @Autowired
+    private lateinit var orgService: OrgService
 
     @ApiOperation(value = "Find all Social Workers", response = SocialWorker::class, responseContainer = "List")
     @ApiImplicitParams(
@@ -122,6 +126,24 @@ class SocialWorkerController {
         val worker = socialWorkerService.findById(workerId)
         worker.students.clear()
         socialWorkerService.save(worker)
+        return ResponseEntity(HttpStatus.OK)
+    }
+
+    @PutMapping(value = ["/joinOrg/{id}"])
+    fun joinOrg(@PathVariable id: Long, authentication: Authentication): ResponseEntity<*> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        val socialworker = socialWorkerService.findById(user.userId)
+        val org = orgService.findById(id)
+        socialworker.organization = org
+        return ResponseEntity(socialWorkerService.update(socialworker, socialworker.workerid), HttpStatus.OK)
+    }
+
+    @DeleteMapping(value = ["/leaveOrg"])
+    fun leaveOrg(authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val user = userService.findByUsername(username)
+        socialWorkerService.leaveOrg(user.userId)
         return ResponseEntity(HttpStatus.OK)
     }
 
