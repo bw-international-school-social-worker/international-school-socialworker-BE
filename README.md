@@ -490,7 +490,7 @@ Body:
 #### Delete an existing Organization
 *Can only be accessed by an administrative account. Cannot be accessed by Social Workers or School Admins*
 
-```DELETE: /orgs/delete/{id}
+```DELETE: /orgs/delete/{id}```
 
 
 
