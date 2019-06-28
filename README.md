@@ -35,7 +35,7 @@ Body:
 
 #### Logout current user
 
-`GET: /createnewuser/socialworker`
+`GET: /oauth/revoke-token`
 
 #### Login and get access token
 
