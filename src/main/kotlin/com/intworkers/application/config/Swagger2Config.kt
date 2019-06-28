@@ -27,7 +27,7 @@ import springfox.documentation.spring.web.plugins.Docket
 
     private fun apiEndPointsInfo(): ApiInfo {
         return ApiInfoBuilder().title("Educell API")
-                .description("A bookstore application")
+                .description("Back-end API for Educell's International Schools and Social WOrkers Application")
                 .license("MIT").licenseUrl("https://github.com/bw-international-school-social-worker/international-school-socialworker-BE/blob/master/LICENSE")
                 .version("1.0.0").build()
     }
