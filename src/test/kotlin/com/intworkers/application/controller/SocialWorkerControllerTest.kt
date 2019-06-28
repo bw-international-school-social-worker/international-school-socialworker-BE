@@ -152,6 +152,7 @@ class SocialWorkerControllerTest {
         assertEquals(er, tr)
     }
 
+    // Couldn't test due to auth issues
     @Test
     @WithMockUser(username = "socialworker", password = "password", roles = ["socialworker"])
     @WithUserDetails("socialWorker")
