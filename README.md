@@ -132,6 +132,16 @@ Body:
 
 ```DELETE: /socialworkers/removefromschool/{workerId}```
 
+#### Join an Organization as a Social Worker
+*Can only be accessed by Social Workers*
+
+```PUT: /socialworkers/joinorg/{orgId}```
+
+#### Leave current Social Worker's Organization
+*Can only be accessed by Social Workers*
+
+```DELETE: /socialworkers/leaveorg```
+
 ### School Endpoints
 
 #### Find School by School Id
@@ -436,6 +446,54 @@ Body:
 ```BODY: Send the image file as form-data with key "image"```
 
 The response will contain the url where the image can be accessed. Store the url in the "photoUrl" field of appropriate entity and update that entity at the respective endpoint
+
+### Organization Endpoints
+
+#### Find Organization by Id
+*Can be accessed by all accounts*
+
+```GET: /orgs/org/{id}```
+
+#### Find all Organizations
+*Can be accessed by all accounts*
+
+```GET: /orgs/all```
+
+#### Create a new Organization
+*Can only be accessed by an administrative account. Cannot be accessed by Social Workers or School Admins*
+
+```POST: /orgs/new```
+
+```
+All fields are optional
+Body: 
+{
+   "organizationName": "string",
+   "organizationMission": "string", 
+}
+```
+
+#### Update an existing Organization
+*Can only be accessed by an administrative account. Cannot be accessed by Social Workers or School Admins*
+
+```PUT: /orgs/update/{id}```
+
+```
+All fields are optional
+Body: 
+{
+   "organizationName": "string",
+   "organizationMission": "string", 
+}
+```
+
+#### Delete an existing Organization
+*Can only be accessed by an administrative account. Cannot be accessed by Social Workers or School Admins*
+
+```DELETE: /orgs/delete/{id}
+
+
+
 
 
 
