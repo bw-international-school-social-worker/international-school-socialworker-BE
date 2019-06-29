@@ -1,4 +1,3 @@
-
 # international-school-socialworker-BE
 
 
@@ -35,7 +34,7 @@ Body:
 
 #### Logout current user
 
-`GET: /createnewuser/socialworker`
+`GET: /oauth/revoke-token`
 
 #### Login and get access token
 
@@ -53,6 +52,8 @@ username : your username
 password : your password
 ```
 The request grants an "access_token" in the JSON response and must be sent in as a header Authorization: Bearer access_token_here  for **ALL OTHER ENDPOINTS**. The token will be valid for 1 hour.
+
+---
 
 ### School Admin Information Endpoints
 
@@ -74,7 +75,7 @@ Body:
     "photoUrl": "string",
 }
 ```
-#### Delete currently logged in user
+#### Delete currently logged in School Admin
 
 ```DELETE: /schooladmins/myinfo```
 
@@ -87,6 +88,8 @@ Body:
 *Will only be accessible to an administrative account. Not accessible by School Admins or Social Workers.*
 
 ```GET: /schooladmins/all```
+
+---
 
 ### Social Worker Information Endpoints
 
@@ -108,7 +111,7 @@ Body:
     "photoUrl": "string",
 }
 ```
-#### Delete currently logged in user
+#### Delete currently logged in Social Worker
 
 ```DELETE: /socialworkers/myinfo```
 
@@ -131,6 +134,18 @@ Body:
 *Can only be accessed by School Admins. The Social worker will also lose all of their assigned students*
 
 ```DELETE: /socialworkers/removefromschool/{workerId}```
+
+#### Join an Organization as a Social Worker
+*Can only be accessed by Social Workers*
+
+```PUT: /socialworkers/joinorg/{orgId}```
+
+#### Leave current Social Worker's Organization
+*Can only be accessed by Social Workers*
+
+```DELETE: /socialworkers/leaveorg```
+
+---
 
 ### School Endpoints
 
@@ -178,6 +193,8 @@ Body:
 
 ```DELETE: /schools/myschool```
 
+---
+
 ### Grade Endpoints
 
 #### View all grades and students within
@@ -218,6 +235,8 @@ Body:
 
 ```DELETE: /grades/delete/{id}```
 
+---
+
 ### Class Endpoints
 
 #### View all classes and students within
@@ -256,6 +275,8 @@ Body:
 *Can only be accessed by School Admins. The class has to belong to currently logged in School Admin*
 
 ```DELETE: /classes/delete/{id}```
+
+---
 
 ### Student Endpoints
 
@@ -371,6 +392,8 @@ Body:
 
 ```DELETE: /students/{studentId}/removefromschool```
 
+---
+
 ### Visit Endpoints
 
 #### Find Visit by Id
@@ -428,6 +451,8 @@ Body:
 
 ```DELETE: /visits/delete/{visitId}```
 
+---
+
 ### Image Upload Endpoint
 *Can be accessed by all accounts* 
 
@@ -436,6 +461,57 @@ Body:
 ```BODY: Send the image file as form-data with key "image"```
 
 The response will contain the url where the image can be accessed. Store the url in the "photoUrl" field of appropriate entity and update that entity at the respective endpoint
+
+---
+
+### Organization Endpoints
+
+#### Find Organization by Id
+*Can be accessed by all accounts*
+
+```GET: /orgs/org/{id}```
+
+#### Find all Organizations
+*Can be accessed by all accounts*
+
+```GET: /orgs/all```
+
+#### Create a new Organization
+*Can only be accessed by an administrative account. Cannot be accessed by Social Workers or School Admins*
+
+```POST: /orgs/new```
+
+```
+All fields are optional
+Body: 
+{
+   "organizationName": "string",
+   "organizationMission": "string", 
+}
+```
+
+#### Update an existing Organization
+*Can only be accessed by an administrative account. Cannot be accessed by Social Workers or School Admins*
+
+```PUT: /orgs/update/{id}```
+
+```
+All fields are optional
+Body: 
+{
+   "organizationName": "string",
+   "organizationMission": "string", 
+}
+```
+
+#### Delete an existing Organization
+*Can only be accessed by an administrative account. Cannot be accessed by Social Workers or School Admins*
+
+```DELETE: /orgs/delete/{id}```
+
+
+
+
 
 
 
