@@ -10,8 +10,8 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
-@Transactional
-@Component
+//@Transactional
+//@Component
 class UserSeedData : CommandLineRunner {
 
     @Autowired

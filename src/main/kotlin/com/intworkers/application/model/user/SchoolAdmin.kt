@@ -9,7 +9,7 @@ import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
-@ApiModel(value = "school_admins")
+@ApiModel(value = "school_adminsadmin")
 @Entity
 @Table(name = "school_admins")
 class SchoolAdmin(

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
@@ -68,6 +69,14 @@ class UserController {
         return ResponseEntity<Any>(HttpStatus.OK)
     }
 
+    @PutMapping(value = ["/myinfo"],
+            consumes = ["application/json"], produces = ["application/json"])
+    fun updateMyInfo(@Valid @RequestBody user: User, authentication: Authentication): ResponseEntity<Any> {
+        val username = (authentication.principal as UserDetails).username
+        val updatedUser = userService.findByUsername(username)
+        userService.update(user, updatedUser.userId)
+        return ResponseEntity(HttpStatus.OK)
+    }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/user/{id}")

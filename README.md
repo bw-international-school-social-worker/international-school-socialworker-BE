@@ -1,4 +1,3 @@
-
 # international-school-socialworker-BE
 
 
@@ -546,31 +545,6 @@ Body:
    ]
 }
 ```
-
-#### Update a User's information
-
-`PUT: /users/user/{userId}`
-
-```
-Body: 
-{
-	"username": "schooladmin1",
-	"password": "password1", 
-	"userRoles": [
-            {
-                "role": {
-                    "roleId": 1
-                }
-            }
-   ]
-}
-```
-
-#### Delete a User's information 
-
-`DELETE: /users/user/{userId}`
-
-
 
 
 

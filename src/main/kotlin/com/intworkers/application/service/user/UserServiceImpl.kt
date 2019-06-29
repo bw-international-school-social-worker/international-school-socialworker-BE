@@ -1,5 +1,6 @@
 package com.intworkers.application.service.user
 
+import com.intworkers.application.exception.ResourceNotFoundException
 import com.intworkers.application.model.user.User
 import com.intworkers.application.model.user.UserRoles
 import com.intworkers.application.repository.schoolsystem.*
@@ -49,7 +50,6 @@ class UserServiceImpl : UserDetailsService, UserService {
     lateinit var visitRepo: VisitRepository
 
 
-
     @Transactional
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
@@ -64,7 +64,7 @@ class UserServiceImpl : UserDetailsService, UserService {
 
     override fun findAll(): List<User> {
         val list = ArrayList<User>()
-        userrepos.findAll().iterator().forEachRemaining{ list.add(it) }
+        userrepos.findAll().iterator().forEachRemaining { list.add(it) }
         return list
     }
 
@@ -92,38 +92,28 @@ class UserServiceImpl : UserDetailsService, UserService {
 
     @Transactional
     override fun update(user: User, id: Long): User {
-        val authentication = SecurityContextHolder.getContext().authentication
-        val currentUser = userrepos.findByUsername(authentication.name)
-
-        if (currentUser != null) {
-            if (id == currentUser.userId) {
-                if (user.username != null) {
-                    currentUser.username = user.username
-                }
-
-                if (user.getPassword() != null) {
-                    currentUser.setPasswordNoEncrypt(user.getPassword()!!)
-                }
-
-                if (user.userRoles.size > 0) {
-                    // with so many relationships happening, I decided to go
-                    // with old school queries
-                    // delete the old ones
-                    rolerepos.deleteUserRolesByUserId(currentUser.userId)
-
-                    // add the new ones
-                    for (ur in user.userRoles) {
-                        rolerepos.insertUserRoles(id, ur.role!!.roleId)
-                    }
-                }
-                return userrepos.save(currentUser)
-            } else {
-                throw EntityNotFoundException(java.lang.Long.toString(id) + " Not current user")
-            }
-        } else {
-            throw EntityNotFoundException(authentication.name)
+        val currentUser = userrepos.findById(id)
+                .orElseThrow { ResourceNotFoundException("Couldn't find User with id $id") }
+        if (user.username != null) {
+            currentUser.username = user.username
         }
 
+        if (user.getPassword() != null) {
+            currentUser.setPasswordNoEncrypt(user.getPassword()!!)
+        }
+
+        if (user.userRoles.size > 0) {
+            // with so many relationships happening, I decided to go
+            // with old school queries
+            // delete the old ones
+            rolerepos.deleteUserRolesByUserId(currentUser.userId)
+
+            // add the new ones
+            for (ur in user.userRoles) {
+                rolerepos.insertUserRoles(id, ur.role!!.roleId)
+            }
+        }
+        return userrepos.save(currentUser)
     }
 
     override fun findByUsername(username: String): User {
