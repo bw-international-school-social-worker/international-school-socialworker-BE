@@ -9,8 +9,9 @@
 ### Authorization Enpoints
 
 ####  Create a new user with user-type schooladmin
+*Grants the account an authority of 'ROLE_SCHOOLADMIN' and will make all School Admin endpoints accessible. For more information on authority, check Administrative Endpoints section*
 
-POST: /createnewuser/schooladmin
+`POST: /createnewuser/schooladmin`
 
 Body: 
  
@@ -22,6 +23,7 @@ Body:
     
 
 #### Create a new user with user-type socialworker
+*Grants the account an authority of 'ROLE_SOCIALWORKER' and will make all Social Worker endpoints accessible. For more information on authority, check Administrative Endpoints section*
 
 `POST: /createnewuser/socialworker`
 
@@ -54,6 +56,8 @@ password : your password
 ```
 The request grants an "access_token" in the JSON response and must be sent in as a header Authorization: Bearer access_token_here  for **ALL OTHER ENDPOINTS**. The token will be valid for 1 hour.
 
+---
+
 ### School Admin Information Endpoints
 
 #### Get  information of currently logged in School Admin
@@ -74,7 +78,7 @@ Body:
     "photoUrl": "string",
 }
 ```
-#### Delete currently logged in user
+#### Delete currently logged in School Admin
 
 ```DELETE: /schooladmins/myinfo```
 
@@ -87,6 +91,8 @@ Body:
 *Will only be accessible to an administrative account. Not accessible by School Admins or Social Workers.*
 
 ```GET: /schooladmins/all```
+
+---
 
 ### Social Worker Information Endpoints
 
@@ -108,7 +114,7 @@ Body:
     "photoUrl": "string",
 }
 ```
-#### Delete currently logged in user
+#### Delete currently logged in Social Worker
 
 ```DELETE: /socialworkers/myinfo```
 
@@ -141,6 +147,8 @@ Body:
 *Can only be accessed by Social Workers*
 
 ```DELETE: /socialworkers/leaveorg```
+
+---
 
 ### School Endpoints
 
@@ -188,6 +196,8 @@ Body:
 
 ```DELETE: /schools/myschool```
 
+---
+
 ### Grade Endpoints
 
 #### View all grades and students within
@@ -228,6 +238,8 @@ Body:
 
 ```DELETE: /grades/delete/{id}```
 
+---
+
 ### Class Endpoints
 
 #### View all classes and students within
@@ -266,6 +278,8 @@ Body:
 *Can only be accessed by School Admins. The class has to belong to currently logged in School Admin*
 
 ```DELETE: /classes/delete/{id}```
+
+---
 
 ### Student Endpoints
 
@@ -381,6 +395,8 @@ Body:
 
 ```DELETE: /students/{studentId}/removefromschool```
 
+---
+
 ### Visit Endpoints
 
 #### Find Visit by Id
@@ -438,6 +454,8 @@ Body:
 
 ```DELETE: /visits/delete/{visitId}```
 
+---
+
 ### Image Upload Endpoint
 *Can be accessed by all accounts* 
 
@@ -446,6 +464,8 @@ Body:
 ```BODY: Send the image file as form-data with key "image"```
 
 The response will contain the url where the image can be accessed. Store the url in the "photoUrl" field of appropriate entity and update that entity at the respective endpoint
+
+---
 
 ### Organization Endpoints
 
@@ -491,6 +511,66 @@ Body:
 *Can only be accessed by an administrative account. Cannot be accessed by Social Workers or School Admins*
 
 ```DELETE: /orgs/delete/{id}```
+
+---
+
+### Adminstrative endpoints
+*All these endpoints can only be accessed by an administrative account. Cannot be accessed by School Admins and Social Workers. Every account in the system can have a role of admin (roleId: 3), schooladmin (roleId: 1), and socialworker(roleId: 2). These endpoints should not be used in production*
+
+#### List all Users
+*Lists all users with their respective authorities
+
+`GET: /users/users`
+
+#### Get User by Id
+*Finds a User based on the User's Id*
+
+`GET: /users/user/{userId}`
+
+#### Create new User with a Role(s) and authority
+*Creates a new User with a Role(s) based on the Role Id(s) provided. The user can have multiple roles, but should never be done in production.*
+
+`POST: /users/user`
+
+```
+Body: 
+{
+	"username": "schooladmin1",
+	"password": "password1", 
+	"userRoles": [
+            {
+                "role": {
+                    "roleId": 1
+                }
+            }
+   ]
+}
+```
+
+#### Update a User's information
+
+`PUT: /users/user/{userId}`
+
+```
+Body: 
+{
+	"username": "schooladmin1",
+	"password": "password1", 
+	"userRoles": [
+            {
+                "role": {
+                    "roleId": 1
+                }
+            }
+   ]
+}
+```
+
+#### Delete a User's information 
+
+`DELETE: /users/user/{userId}`
+
+
 
 
 
