@@ -8,8 +8,9 @@
 ### Authorization Enpoints
 
 ####  Create a new user with user-type schooladmin
+*Grants the account an authority of 'ROLE_SCHOOLADMIN' and will make all School Admin endpoints accessible. For more information on authority, check Administrative Endpoints section*
 
-POST: /createnewuser/schooladmin
+`POST: /createnewuser/schooladmin`
 
 Body: 
  
@@ -21,6 +22,7 @@ Body:
     
 
 #### Create a new user with user-type socialworker
+*Grants the account an authority of 'ROLE_SOCIALWORKER' and will make all Social Worker endpoints accessible. For more information on authority, check Administrative Endpoints section*
 
 `POST: /createnewuser/socialworker`
 
@@ -52,6 +54,18 @@ username : your username
 password : your password
 ```
 The request grants an "access_token" in the JSON response and must be sent in as a header Authorization: Bearer access_token_here  for **ALL OTHER ENDPOINTS**. The token will be valid for 1 hour.
+
+#### Update username and password of currently logged in user
+
+`PUT: /users/myinfo`
+
+All fields are optional
+Body: 
+{
+    "username": "string",
+    "password": "string"
+}
+```
 
 ---
 
@@ -508,6 +522,64 @@ Body:
 *Can only be accessed by an administrative account. Cannot be accessed by Social Workers or School Admins*
 
 ```DELETE: /orgs/delete/{id}```
+
+---
+
+### Adminstrative endpoints
+*All these endpoints can only be accessed by an administrative account. Cannot be accessed by School Admins and Social Workers. Every account in the system can have a role of admin (roleId: 3), schooladmin (roleId: 1), and socialworker(roleId: 2). These endpoints should not be used in production*
+
+#### List all Users
+*Lists all users with their respective authorities
+
+`GET: /users/users`
+
+#### Get User by Id
+*Finds a User based on the User's Id*
+
+`GET: /users/user/{userId}`
+
+#### Create new User with a Role(s) and authority
+*Creates a new User with a Role(s) based on the Role Id(s) provided. The user can have multiple roles, but should never be done in production.*
+
+`POST: /users/user`
+
+```
+Body: 
+{
+	"username": "schooladmin1",
+	"password": "password1", 
+	"userRoles": [
+            {
+                "role": {
+                    "roleId": 1
+                }
+            }
+   ]
+}
+```
+
+#### Update a User's information
+
+`PUT: /users/user/{userId}`
+
+```
+Body: 
+{
+	"username": "string",
+	"password": "string", 
+	"userRoles": [
+            {
+                "role": {
+                    "roleId": 1
+                }
+            }
+   ]
+}
+```
+
+#### Delete a User's information 
+
+`DELETE: /users/user/{userId}`
 
 
 
