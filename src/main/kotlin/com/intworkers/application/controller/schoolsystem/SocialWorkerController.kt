@@ -129,7 +129,8 @@ class SocialWorkerController {
         return ResponseEntity(HttpStatus.OK)
     }
 
-    @PutMapping(value = ["/joinOrg/{id}"])
+    @PreAuthorize("hasAuthority('ROLE_SOCIALWORKER')")
+    @PutMapping(value = ["/joinorg/{id}"])
     fun joinOrg(@PathVariable id: Long, authentication: Authentication): ResponseEntity<*> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
@@ -139,7 +140,8 @@ class SocialWorkerController {
         return ResponseEntity(socialWorkerService.update(socialworker, socialworker.workerid), HttpStatus.OK)
     }
 
-    @DeleteMapping(value = ["/leaveOrg"])
+    @PreAuthorize("hasAuthority('ROLE_SOCIALWORKER')")
+    @DeleteMapping(value = ["/leaveorg"])
     fun leaveOrg(authentication: Authentication): ResponseEntity<Any> {
         val username = (authentication.principal as UserDetails).username
         val user = userService.findByUsername(username)
