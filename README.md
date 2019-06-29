@@ -59,6 +59,7 @@ The request grants an "access_token" in the JSON response and must be sent in as
 
 `PUT: /users/myinfo`
 
+```
 All fields are optional
 Body: 
 {
