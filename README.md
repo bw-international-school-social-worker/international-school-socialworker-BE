@@ -11,14 +11,14 @@
 *Grants the account an authority of 'ROLE_SCHOOLADMIN' and will make all School Admin endpoints accessible. For more information on authority, check Administrative Endpoints section*
 
 `POST: /createnewuser/schooladmin`
-
-Body: 
  
-   ```{ 
-    "username": "Username string here",
-    "password": "Password string here"
-    }
-  ```
+```
+Body:
+{
+   "username": "string",
+   "password": "string"
+}
+```
     
 
 #### Create a new user with user-type socialworker
@@ -26,13 +26,13 @@ Body:
 
 `POST: /createnewuser/socialworker`
 
-Body: 
-   ``` 
-   { 
-    "username": "Username string here",
-    "password": "Password string here"
-    }
-  ```
+```
+Body:
+{
+   "username": "string",
+   "password": "string"
+}
+```
 
 #### Logout current user
 
