@@ -55,6 +55,19 @@ password : your password
 ```
 The request grants an "access_token" in the JSON response and must be sent in as a header Authorization: Bearer access_token_here  for **ALL OTHER ENDPOINTS**. The token will be valid for 1 hour.
 
+#### Update username and password of currently logged in user 
+
+`PUT: /users/myinfo`
+
+```
+All fields are optional
+Body:
+{
+   "username": "string",
+   "password": "string"
+}
+```
+
 ---
 
 ### School Admin Information Endpoints
@@ -545,6 +558,29 @@ Body:
    ]
 }
 ```
+
+#### Update a User's information
+
+`PUT: /users/user/{userId}`
+
+```
+Body: 
+{
+	"username": "string",
+	"password": "string", 
+	"userRoles": [
+            {
+                "role": {
+                    "roleId": 1
+                }
+            }
+   ]
+}
+```
+
+#### Delete a User's information 
+
+`DELETE: /users/user/{userId}`
 
 
 
